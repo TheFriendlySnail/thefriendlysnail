@@ -139,14 +139,14 @@ nav {
 
 .product-price {
   font-size: 1.2rem;
-  color: #e74c3c;
+  color: #333;
   margin-bottom: 15px;
 }
 
 .shop-button {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #1abc9c;
+  background-color: #292929;
   color: white;
   text-decoration: none;
   border-radius: 5px;
@@ -154,5 +154,5 @@ nav {
 }
 
 .shop-button:hover {
-  background-color: #16a085;
+  background-color: #000000;
 }
