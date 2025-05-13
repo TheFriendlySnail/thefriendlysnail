@@ -6,6 +6,10 @@ body {
   color: #333;
 }
 
+body {
+  background-color: pink;
+}
+
 /* Navbar Container */
 nav {
   display: flex;
