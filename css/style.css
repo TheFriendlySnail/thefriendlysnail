@@ -156,3 +156,54 @@ nav {
 .shop-button:hover {
   background-color: #000000;
 }
+
+/* Who We Are Section */
+.who-we-are {
+  padding: 40px 20px;
+  background-color: #fafafa;
+  text-align: center;
+}
+
+.who-we-are-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.who-we-are-logo {
+  width: 150px;
+  height: auto;
+}
+
+.who-we-are-text {
+  max-width: 600px;
+  text-align: left;
+}
+
+.who-we-are h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.who-we-are p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.learn-more-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #292929;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.learn-more-button:hover {
+  background-color: #000000;
+}
