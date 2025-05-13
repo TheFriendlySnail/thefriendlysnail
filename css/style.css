@@ -63,3 +63,36 @@ nav {
     padding: 8px 0;
   }
 }
+
+/* BANNER */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  background-image: url('/assets/banner.jpg'); /* adjust if it's .png */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* black tint */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner h1 {
+  color: white;
+  font-size: 3rem;
+  z-index: 2;
+  text-align: center;
+  margin: 0;
+}
