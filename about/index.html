@@ -2,34 +2,81 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TheFriendlySnail</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="icon" href="/favicon.png" type="image/png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us – The Friendly Snail</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
   <!-- Navigation Bar -->
-  <nav>
+  <nav class="navbar">
     <div class="nav-left">
-      <a href="/" class="logo">
-        <img src="/assets/logo.png" alt="The Friendly Snail Logo">
-      </a>
+      <a href="index.html"><img src="assets/logo.png" alt="Logo" class="logo" /></a>
     </div>
-    <div class="nav-right">
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-      <a href="/shop/">Shop</a>
-      <li><a href="/checkout/"><i class="fas fa-shopping-cart"></i></a></li>
-    </div>
+    <ul class="nav-right">
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="checkout.html"><i class="fas fa-shopping-cart"></i></a></li>
+    </ul>
   </nav>
 
-  <!-- Page Content -->
-  <main>
-    <h1>Welcome to TheFriendlySnail!</h1>
-    <p>ABOUT US</p>
-  </main>
+  <!-- Hero Section -->
+  <header class="about-hero">
+    <img src="assets/banner.jpg" alt="Banner">
+    <div class="hero-text">
+      <h1>About The Friendly Snail</h1>
+    </div>
+  </header>
+
+  <!-- Our Story -->
+  <section class="about-section">
+    <img src="assets/story.jpg" alt="Our Story">
+    <div>
+      <h2>Our Story</h2>
+      <p>It all started with a snail and a cucumber slice. The Friendly Snail was born from a passion for providing the best veggie snacks for aquarium pets — from crunchy carrot bites to spirulina snail sliders. Our goal is to make aquatic life tastier, healthier, and happier.</p>
+    </div>
+  </section>
+
+  <!-- Our Mission -->
+  <section class="about-section reverse">
+    <img src="assets/mission.jpg" alt="Our Mission">
+    <div>
+      <h2>Our Mission</h2>
+      <p>We’re dedicated to crafting wholesome, eco-friendly snacks for freshwater snails, shrimp, and herbivorous fish. All ingredients are selected with care and love, because every little creature deserves a gourmet experience.</p>
+    </div>
+  </section>
+
+  <!-- Meet the Team -->
+  <section class="team">
+    <h2>Meet the Snail Chefs</h2>
+    <div class="team-members">
+      <div class="team-member">
+        <img src="assets/chef1.jpg" alt="Chef Snail 1">
+        <h3>Ernie</h3>
+        <p>Executive Snail Chef & Leaf Cruncher</p>
+      </div>
+      <div class="team-member">
+        <img src="assets/chef2.jpg" alt="Chef Snail 2">
+        <h3>Celina</h3>
+        <p>Head of Carrot Creativity</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-left">
+      <p>The Friendly Snail</p>
+    </div>
+    <div class="footer-right">
+      <p>Email: <a href="mailto:business.gabelawrence@gmail.com">business.gabelawrence@gmail.com</a></p>
+      <p>Phone: <a href="tel:+61493474198">0493 474 198</a></p>
+    </div>
+  </footer>
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 </body>
 </html>
