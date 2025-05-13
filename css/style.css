@@ -207,3 +207,32 @@ nav {
 .learn-more-button:hover {
   background-color: #000000;
 }
+
+/* Footer Styles */
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #222;
+  color: #fff;
+  flex-wrap: wrap;
+}
+
+.site-footer a {
+  color: #1abc9c;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+.footer-left,
+.footer-right {
+  flex: 1 1 300px;
+}
+
+.footer-right p {
+  margin: 5px 0;
+}
