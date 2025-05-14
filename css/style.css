@@ -461,20 +461,21 @@ button[type="submit"]:hover {
 }
 
 /* Add to Cart Button */
-.add-to-cart {
+button.add-to-cart {
+  all: unset; /* optional: clears browser defaults */
   display: inline-block;
   padding: 10px 20px;
-  background-color: #333 !important;
-  color: white !important;
+  background-color: #333;
+  color: white;
   text-decoration: none;
-  border: none; /* Removes default button border */
   border-radius: 5px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
-.add-to-cart:hover {
+button.add-to-cart:hover {
   background-color: #555;
 }
+
 
