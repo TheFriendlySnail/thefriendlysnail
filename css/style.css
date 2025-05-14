@@ -494,23 +494,23 @@ body {
   gap: 2rem;
 }
 
-.gallery {
+.product-images {
   flex: 1;
   max-width: 500px;
 }
 
-.gallery img {
+.product-images img {
   width: 100%;
   border-radius: 10px;
 }
 
-.thumbnails {
+.thumbnail-images {
   display: flex;
   gap: 10px;
   margin-top: 10px;
 }
 
-.thumbnails img {
+.thumbnail-images img {
   width: 60px;
   height: 60px;
   object-fit: cover;
@@ -519,7 +519,7 @@ body {
   cursor: pointer;
 }
 
-.thumbnails img.active {
+.thumbnail-images img.active {
   border-color: #333;
 }
 
