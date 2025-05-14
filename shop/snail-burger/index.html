@@ -276,5 +276,21 @@ function displayReviews() {
 }
 </script>
 
+<script>
+  function changeImage(img) {
+    const mainImage = document.getElementById('mainImage');
+    if (mainImage && img) {
+      mainImage.src = img.src;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const firstThumbnail = document.querySelector('.thumbnail');
+    if (firstThumbnail) {
+      changeImage(firstThumbnail);
+    }
+  });
+</script>
+
 </body>
 </html>
