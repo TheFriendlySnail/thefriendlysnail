@@ -29,9 +29,9 @@
   <div class="gallery">
     <img id="mainImage" src="../assets/snailburger1.jpg" alt="Main Product Image">
     <div class="thumbnails">
-      <img src="/assets/snailburger1.jpg" class="active" onclick="setImage(this)">
-      <img src="/assets/snailburger2.jpg" onclick="setImage(this)">
-      <img src="/assets/snailburger3.jpg" onclick="setImage(this)">
+      <img src="/assets/snailburger1.jpg" class="active" onclick="changeImage(this)">
+      <img src="/assets/snailburger2.jpg" onclick="changeImage(this)">
+      <img src="/assets/snailburger3.jpg" onclick="changeImage(this)">
     </div>
   </div>
 
@@ -167,11 +167,17 @@ Use within 6 months of opening.<br>
     displayReviews();
   };
 
-  function setImage(img) {
+  function changeImage(img) {
     document.getElementById('mainImage').src = img.src;
-    document.querySelectorAll('.thumbnails img').forEach(el => el.classList.remove('active'));
-    img.classList.add('active');
   }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const firstThumbnail = document.querySelector('.thumbnail');
+    if (firstThumbnail) {
+      document.getElementById('mainImage').src = firstThumbnail.src;
+    }
+  });
+
 
   function updatePrice() {
     const selected = document.getElementById('size').value;
