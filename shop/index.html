@@ -51,7 +51,10 @@
         </a>
           <h2>Snail Burgers</h2>
           <p>$9.99+</p>
-          <a href="/shop/snail-burger" class="add-to-cart">Add to Cart</a>
+          <button class="add-to-cart" onclick="addToCart('snail-burger', 'Snail Burger', 9.99)">
+            Add to Cart
+          </button>
+
       </div>
 
       <div class="product-card" data-name="Weighted Skewers" data-price="0.99" data-sales="0">
@@ -60,7 +63,9 @@
         </a>
           <h2>Weighted Skewers</h2>
           <p>$0.99</p>
-          <a href="/shop/weighted-skewer" class="add-to-cart">Add to Cart</a>
+          <button class="add-to-cart" onclick="addToCart('weighted-skewer', 'Weighted Skewer', 0.99)">
+            Add to Cart
+          </button>
       </div>
 
       <div class="product-card" data-name="Spinach Snail Wraps" data-price="5.99" data-sales="0">
@@ -69,7 +74,9 @@
         </a>
           <h2>Spinach Snail Wraps</h2>
           <p>$5.99</p>
-          <a href="/shop/spinach-wraps" class="add-to-cart">Add to Cart</a>
+          <button class="add-to-cart" onclick="addToCart('spinach-wraps', 'Spinach Wraps', 5.99)">
+            Add to Cart
+          </button>
       </div>
     </div>
   </main>
@@ -111,5 +118,22 @@
       products.forEach(product => grid.appendChild(product));
     }
   </script>
+
+  <script>
+  function addToCart(id, name, price) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    const existingItem = cart.find(item => item.id === id);
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({ id, name, price, quantity: 1 });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert(`${name} added to cart!`);
+  }
+</script>
+
 </body>
 </html>
