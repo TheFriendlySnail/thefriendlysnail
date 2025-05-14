@@ -464,13 +464,14 @@ button[type="submit"]:hover {
   background-color: #292929;
   color: white;
   text-decoration: none;
-  border: none; /* 👈 This is important for <button> */
+  border: none; /* Removes default button border */
   border-radius: 5px;
   font-weight: bold;
-  cursor: pointer; /* 👈 This makes it look like a button */
+  cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .add-to-cart:hover {
   background-color: #000;
 }
+
