@@ -459,13 +459,12 @@ button[type="submit"]:hover {
 
 /* Add to Cart Button */
 .add-to-cart {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
+  display: inline-block;
+  padding: 10px 20px;
   background-color: #292929;
   color: white;
-  border: none;
+  text-decoration: none;
   border-radius: 5px;
-  cursor: pointer;
   font-weight: bold;
   transition: background-color 0.2s ease;
 }
