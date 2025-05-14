@@ -462,11 +462,12 @@ button[type="submit"]:hover {
   display: inline-block;
   padding: 10px 20px;
   background-color: #292929;
-  color: white;
-  text-decoration: none;
+  color: white !important; /* force override link color */
+  text-decoration: none !important; /* prevent underline */
   border-radius: 5px;
   font-weight: bold;
   transition: background-color 0.2s ease;
+  text-align: center;
 }
 
 .add-to-cart:hover {
