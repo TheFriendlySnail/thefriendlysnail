@@ -461,7 +461,7 @@ button[type="submit"]:hover {
 }
 
 /* Add to Cart Button */
-button[type="add-to-cart"] {
+button[class="add-to-cart"] {
   display: inline-block;
   padding: 10px 20px;
   background-color: #333;
@@ -474,7 +474,7 @@ button[type="add-to-cart"] {
   transition: background-color 0.2s ease;
 }
 
-button[type="add-to-cart"]:hover {
+button[class="add-to-cart"]:hover {
   background-color: #555;
 }
 
