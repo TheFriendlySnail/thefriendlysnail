@@ -2,34 +2,102 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TheFriendlySnail</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Friendly Snail | Shop</title>
+  <link rel="stylesheet" href="../css/style.css" />
   <link rel="icon" href="/favicon.png" type="image/png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-
-  <!-- Navigation Bar -->
-  <nav>
-    <div class="nav-left">
-      <a href="/" class="logo">
-        <img src="/assets/logo.png" alt="The Friendly Snail Logo">
-      </a>
-    </div>
-    <div class="nav-right">
+  <!-- Navbar -->
+  <header class="navbar">
+    <a href="/" class="logo"><img src="/assets/logo.png" alt="Logo" /></a>
+    <nav class="nav-links">
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
-      <a href="/shop/">Shop</a>
-      <li><a href="/checkout/"><i class="fas fa-shopping-cart"></i></a></li>
-    </div>
-  </nav>
+      <a href="/shop/" class="active">Shop</a>
+      <a href="/checkout/" title="Checkout"><img src="/assets/cart-icon.png" alt="Cart" class="cart-icon" /></a>
+    </nav>
+  </header>
 
-  <!-- Page Content -->
-  <main>
-    <h1>Welcome to TheFriendlySnail!</h1>
-    <p>ABOUT US</p>
+  <main class="shop-page">
+    <h1>Our Products</h1>
+
+    <!-- Filter Dropdown -->
+    <div class="sort-container">
+      <label for="sort">Sort by:</label>
+      <select id="sort" onchange="sortProducts()">
+        <option value="az">A - Z</option>
+        <option value="za">Z - A</option>
+        <option value="best">Best Selling</option>
+        <option value="low">Price: Low to High</option>
+        <option value="high">Price: High to Low</option>
+      </select>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid" id="productGrid">
+      <!-- Product Template -->
+      <div class="product-card" data-name="Snail Burgers" data-price="From 9.99" data-sales="0">
+        <a href="/shop/snail-burgers/">
+          <img src="/assets/snailburger.jpg" alt="Snail Burgers" />
+          <h2>Snail Burgers</h2>
+          <p>$ From 9.99</p>
+        </a>
+      </div>
+
+      <div class="product-card" data-name="Weighted Skewers" data-price="0.99" data-sales="0">
+        <a href="/shop/weighted-skewers/">
+          <img src="/assets/skewer.jpg" alt="Weighted Skewers" />
+          <h2>Weighted Skewers</h2>
+          <p>$0.99</p>
+        </a>
+      </div>
+
+      <div class="product-card" data-name="Spinach Snail Wraps" data-price="5.99" data-sales="0">
+        <a href="/shop/spinach-wraps/">
+          <img src="/assets/spinach.jpg" alt="Spinach Wraps" />
+          <h2>Spinach Snail Wraps</h2>
+          <p>$5.99</p>
+        </a>
+      </div>
+    </div>
   </main>
 
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-left">The Friendly Snail</div>
+      <div class="footer-right">
+        <p>Email: <a href="mailto:business.gabelawrence@gmail.com">business.gabelawrence@gmail.com</a></p>
+        <p>Phone: 0493 474 198</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function sortProducts() {
+      const grid = document.getElementById("productGrid");
+      const products = Array.from(grid.getElementsByClassName("product-card"));
+      const sortBy = document.getElementById("sort").value;
+
+      products.sort((a, b) => {
+        const nameA = a.dataset.name.toLowerCase();
+        const nameB = b.dataset.name.toLowerCase();
+        const priceA = parseFloat(a.dataset.price);
+        const priceB = parseFloat(b.dataset.price);
+        const salesA = parseInt(a.dataset.sales);
+        const salesB = parseInt(b.dataset.sales);
+
+        switch (sortBy) {
+          case "az": return nameA.localeCompare(nameB);
+          case "za": return nameB.localeCompare(nameA);
+          case "low": return priceA - priceB;
+          case "high": return priceB - priceA;
+          case "best": return salesB - salesA;
+        }
+      });
+
+      products.forEach(product => grid.appendChild(product));
+    }
+  </script>
 </body>
 </html>
