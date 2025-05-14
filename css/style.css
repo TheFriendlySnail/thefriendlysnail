@@ -437,7 +437,7 @@ button[type="submit"]:hover {
 }
 
 .product-card img {
-  width: 100%;
+  width: 50%;
   max-height: 400px;
   object-fit: cover;
   border-radius: 50%;
