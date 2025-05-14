@@ -478,4 +478,139 @@ button.add-to-cart:hover {
   background-color: #555;
 }
 
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f8f8f8;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.gallery {
+  flex: 1;
+  max-width: 500px;
+}
+
+.gallery img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.thumbnails img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.thumbnails img.active {
+  border-color: #333;
+}
+
+.details {
+  flex: 1;
+  min-width: 300px;
+}
+
+.details h1 {
+  margin-top: 0;
+}
+
+.price {
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.details label,
+.details select,
+.details input {
+  display: block;
+  margin: 10px 0;
+}
+
+.add-to-cart {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.accordion {
+  max-width: 1200px;
+  margin: 2rem auto;
+}
+
+.accordion-section {
+  background: white;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.accordion-header {
+  padding: 1rem;
+  background: #eee;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.accordion-content {
+  display: none;
+  padding: 1rem;
+  border-top: 1px solid #ccc;
+}
+
+.review-form textarea {
+  width: 100%;
+  height: 100px;
+}
+
+.reviews {
+  margin-top: 1rem;
+}
+
+.review {
+  background: #f0f0f0;
+  padding: 10px;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+}
+
+.sort-reviews {
+  margin-bottom: 1rem;
+}
+
+.stars {
+  display: inline-block;
+  font-size: 1.5rem;
+  color: #ccc;
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 10px;
+}
+
+.stars span:hover,
+.stars span.hover,
+.stars span.selected {
+  color: gold;
+}
 
