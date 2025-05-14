@@ -444,10 +444,9 @@ button[type="submit"]:hover {
   margin-bottom: 1rem;
 }
 
-.product-card h2 {
-  margin: 0.5rem 0;
-  font-size: 1.2rem;
-  color: #333;
+.product-card h2a {
+  text-decoration: none;
+  color: #000;
 }
 
 .product-card p {
@@ -456,15 +455,21 @@ button[type="submit"]:hover {
   color: #444;
 }
 
-.product-card a {
-  text-decoration: none;
-  color: inherit;
-  display: block;
 }
 
-/* Cart icon alignment */
-.cart-icon {
-  height: 24px;
-  vertical-align: middle;
+/* Add to Cart Button */
+.add-to-cart {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
 }
 
+.add-to-cart:hover {
+  background-color: #4cae4c;
+}
