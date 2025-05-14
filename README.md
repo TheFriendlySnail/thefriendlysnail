@@ -1,5 +1,7 @@
 ## Hi there 👋
 
+This is the official page for The Friendly Snail, a website dedicated to making delicious snacks for your aquatic snail friends!
+
 <!--
 **TheFriendlySnail/thefriendlysnail** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
