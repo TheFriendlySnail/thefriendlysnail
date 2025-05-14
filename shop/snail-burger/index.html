@@ -6,6 +6,16 @@
   <link rel="stylesheet" href="../../css/style.css">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 600px; margin: auto; }
+    .review { border-bottom: 1px solid #ccc; padding: 10px 0; }
+    .stars { color: gold; font-size: 1.2em; }
+    label { display: block; margin-top: 10px; }
+    textarea, input, select, button { width: 100%; padding: 8px; margin-top: 5px; }
+    button { background: #292929; color: white; border: none; cursor: pointer; margin-top: 10px; }
+    button:hover { background: #000; }
 </head>
 <body>
 
@@ -116,34 +126,30 @@ Use within 6 months of opening.<br>
   <div class="accordion-section">
     <div class="accordion-header" onclick="toggleAccordion(this)">Reviews</div>
     <div class="accordion-content">
-      <div class="review-form">
-        <label>Rating:</label>
-        <div class="stars" id="starRating">
-          <span data-value="1">&#9733;</span>
-          <span data-value="2">&#9733;</span>
-          <span data-value="3">&#9733;</span>
-          <span data-value="4">&#9733;</span>
-          <span data-value="5">&#9733;</span>
-        </div>
+  <h2>Leave a Review</h2>
+  <form id="reviewForm">
+    <label>Name:</label>
+    <input id="name" required>
 
-  <textarea id="reviewText" placeholder="Write your review..."></textarea>
-  <button class="add-to-cart" onclick="submitReview()">Submit Review</button>
-</div>
+    <label>Rating:</label>
+    <select id="rating" required>
+      <option value="5">★★★★★</option>
+      <option value="4">★★★★☆</option>
+      <option value="3">★★★☆☆</option>
+      <option value="2">★★☆☆☆</option>
+      <option value="1">★☆☆☆☆</option>
+    </select>
 
+    <label>Review:</label>
+    <textarea id="text" required></textarea>
 
-      <div class="sort-reviews">
-        Sort by:
-        <select onchange="sortReviews(this.value)">
-          <option value="latest">Latest</option>
-          <option value="high">Highest Rating</option>
-          <option value="low">Lowest Rating</option>
-        </select>
-      </div>
+    <button type="submit">Submit Review</button>
+  </form>
 
-      <div id="reviews" class="reviews"></div>
-    </div>
-  </div>
-</div>
+  <h2>Reviews</h2>
+  <div id="reviewsContainer"></div>
+
+  <script src="review-script.js"></script>
 
 <!-- Footer -->
 <footer class="site-footer">
@@ -273,6 +279,86 @@ function displayReviews() {
     `;
     container.appendChild(div);
   });
+
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDsisw2KzJEozNdAIpLgdx5XULB7C-hZZs",
+    authDomain: "the-friendly-snail.firebaseapp.com",
+    projectId: "the-friendly-snail",
+    storageBucket: "the-friendly-snail.firebasestorage.app",
+    messagingSenderId: "948271049573",
+    appId: "1:948271049573:web:ac012a9365d81eb1300f8c",
+    measurementId: "G-9RKMS1JMLF"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "XXXXXX",
+    appId: "YOUR_APP_ID"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  const reviewForm = document.getElementById('reviewForm');
+  const reviewsContainer = document.getElementById('reviewsContainer');
+  const productId = "snail-burger";
+
+  reviewForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const rating = parseInt(document.getElementById('rating').value);
+    const text = document.getElementById('text').value.trim();
+
+    const newReview = {
+      name,
+      rating,
+      text,
+      timestamp: new Date().toISOString()
+    };
+
+    db.ref(`reviews/${productId}`).push(newReview);
+    reviewForm.reset();
+  });
+
+  // Load reviews
+  db.ref(`reviews/${productId}`).on('value', (snapshot) => {
+    const data = snapshot.val();
+    reviewsContainer.innerHTML = '';
+
+    if (!data) {
+      reviewsContainer.innerHTML = "<p>No reviews yet.</p>";
+      return;
+    }
+
+    const reviews = Object.values(data).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    for (const r of reviews) {
+      reviewsContainer.innerHTML += `
+        <div class="review">
+          <strong>${r.name}</strong> – <span class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span><br/>
+          <p>${r.text}</p>
+        </div>
+      `;
+    }
+  });
+
 }
 </script>
 
