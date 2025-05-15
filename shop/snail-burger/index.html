@@ -231,8 +231,9 @@ One Snail Burger should last 2 average-sized mystery snails at least 2 days
 
 <script>
 
-  db.ref(`reviews/${index}`).push({
+  db.ref(`reviews`).push({
     text: reviewText,
+    review: reviewInput,
     timestamp: Date.now()
   })
   .then(() => {
