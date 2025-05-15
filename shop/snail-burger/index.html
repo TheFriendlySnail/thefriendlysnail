@@ -45,7 +45,6 @@
       <img src="/assets/snailburger3.jpg" alt="Thumbnail 3" class="thumbnail" onclick="changeImage(this)">
     </div>
   </div>
-  
 
   <!-- Product Details -->
   <div class="details">
@@ -70,56 +69,37 @@
 <div class="accordion">
   <div class="accordion-section">
     <div class="accordion-header" onclick="toggleAccordion(this)">Description</div>
-    <div class="accordion-content">Made from a nutritious blend of cucumber, broccoli, spinach, and carrot, our Snail Burgers are the perfect plant-based snack for your aquatic snails. Gently bound and shaped into easy-to-eat patties, they provide essential nutrients and enrichment while keeping your tank clean and happy.<br>
-<br>
-✅ 100% vegetarian<br>
-✅ Snail-safe & aquarium-friendly<br>
-✅ No added preservatives<br>
-<br>
-Let your snails snack slow and healthy — they’ll love you for it!</div>
+    <div class="accordion-content">
+      Made from a nutritious blend of cucumber, broccoli, spinach, and carrot...
+    </div>
   </div>
 
   <div class="accordion-section">
     <div class="accordion-header" onclick="toggleAccordion(this)">Ingredients</div>
-    <div class="accordion-content"><em>Ingredients are listed in order of proportions</em><br>
-<br>
-Broccoli<br>
-<br>
-Cucumber<br>
-<br>
-Spinach<br>
-<br>
-Carrot<br>
-<br>
-Calcium Carbonate<br>
-<br>
-Limnospira<br>
+    <div class="accordion-content">
+      <em>Ingredients are listed in order of proportions</em><br><br>
+      Broccoli<br><br>
+      Cucumber<br><br>
+      Spinach<br><br>
+      Carrot<br><br>
+      Calcium Carbonate<br><br>
+      Limnospira
     </div>
   </div>
 
   <div class="accordion-section">
     <div class="accordion-header" onclick="toggleAccordion(this)">Directions for Use</div>
-    <div class="accordion-content">Get a small, shallow container and fill it with some water from the aquarium<br>
-<br>
-Gently push on the plastic of the blister pack to push the snail burger out<br>
-<br>
-Put the snail burger in the shallow container and let sit for 5-10 minutes to allow for full thawing<br>
-<br>
-Once the burger is fully thawed, spear it on a weighted skewer or another utensil<br>
-<br>
-Gently place it in the tank and pour the water in with it<br>
-<br>
-Let your snails enjoy their brand new snack!<br>
-<br>
-One Snail Burger should last 2 average-sized mystery snails at least 2 days<br>
+    <div class="accordion-content">
+      Get a small, shallow container... Let your snails enjoy their brand new snack!
     </div>
   </div>
 
   <div class="accordion-section">
     <div class="accordion-header" onclick="toggleAccordion(this)">Storage Instructions</div>
-    <div class="accordion-content">Store in a cool, dry place.<br>
-Freeze after opening for maximum freshness.<br>
-Use within 6 months of opening.<br>
+    <div class="accordion-content">
+      Store in a cool, dry place.<br>
+      Freeze after opening for maximum freshness.<br>
+      Use within 6 months of opening.
     </div>
   </div>
 
@@ -127,51 +107,50 @@ Use within 6 months of opening.<br>
   <div class="accordion-section">
     <div class="accordion-header" onclick="toggleAccordion(this)">Reviews</div>
     <div class="accordion-content">
-  <h2>Leave a Review</h2>
-  <form id="reviewForm">
-    <label>Name:</label>
-    <input id="name" required>
+      <h2>Leave a Review</h2>
+      <form id="reviewForm">
+        <label>Name:</label>
+        <input id="name" required>
 
-    <label>Rating:</label>
-    <select id="rating" required>
-      <option value="5">★★★★★</option>
-      <option value="4">★★★★☆</option>
-      <option value="3">★★★☆☆</option>
-      <option value="2">★★☆☆☆</option>
-      <option value="1">★☆☆☆☆</option>
-    </select>
+        <label>Rating:</label>
+        <select id="rating" required>
+          <option value="5">★★★★★</option>
+          <option value="4">★★★★☆</option>
+          <option value="3">★★★☆☆</option>
+          <option value="2">★★☆☆☆</option>
+          <option value="1">★☆☆☆☆</option>
+        </select>
 
-    <label>Review:</label>
-    <textarea id="text" required></textarea>
+        <label>Review:</label>
+        <textarea id="text" required></textarea>
 
-    <button type="submit">Submit Review</button>
-  </form>
+        <button type="submit">Submit Review</button>
+      </form>
 
-  <h2>Reviews</h2>
-  <div id="reviewsContainer"></div>
-
-  <script src="review-script.js"></script>
+      <h2>Reviews</h2>
+      <div id="reviewsContainer"></div>
+    </div>
+  </div>
+</div>
 
 <!-- Footer -->
 <footer class="site-footer">
   <div class="footer-left">
     <p>The Friendly Snail</p>
-   </div>
+  </div>
   <div class="footer-right">
     <p>Email: <a href="mailto:business.gabelawrence@gmail.com">business.gabelawrence@gmail.com</a></p>
     <p>Phone: <a href="tel:+61493474198">0493 474 198</a></p>
   </div>
 </footer>
 
-<!-- Font Awesome -->
+<!-- Scripts -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
 <script>
   let currentPrice = 9.99;
   let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
 
-  // On page load, display stored reviews
-  window.onload = function() {
+  window.onload = function () {
     displayReviews();
   };
 
@@ -186,7 +165,6 @@ Use within 6 months of opening.<br>
     }
   });
 
-
   function updatePrice() {
     const selected = document.getElementById('size').value;
     currentPrice = parseFloat(selected);
@@ -197,7 +175,6 @@ Use within 6 months of opening.<br>
     const qty = parseInt(document.getElementById('quantity').value, 10);
     const size = document.getElementById('size').options[document.getElementById('size').selectedIndex].text;
     alert(`Added ${qty} x ${size} Snail Burger(s) to cart for $${(qty * currentPrice).toFixed(2)}.`);
-    // Replace this with Stripe/cart integration as needed
   }
 
   function toggleAccordion(header) {
@@ -205,112 +182,31 @@ Use within 6 months of opening.<br>
     content.style.display = content.style.display === 'block' ? 'none' : 'block';
   }
 
-  let selectedRating = 0;
-
-  document.querySelectorAll('#starRating span').forEach(star => {
-    star.addEventListener('click', function () {
-      selectedRating = parseInt(this.getAttribute('data-value'));
-      updateStars(selectedRating);
-    });
-  
-    star.addEventListener('mouseover', function () {
-      updateStars(parseInt(this.getAttribute('data-value')), true);
-    });
-
-    star.addEventListener('mouseout', function () {
-      updateStars(selectedRating);
-    });
-  });
-
-  function updateStars(rating, hover = false) {
-    document.querySelectorAll('#starRating span').forEach(star => {
-      const value = parseInt(star.getAttribute('data-value'));
-      star.classList.remove('selected', 'hover');
-      if (hover) {
-        if (value <= rating) star.classList.add('hover');
-      } else {
-        if (value <= rating) star.classList.add('selected');
-      }
+  function displayReviews() {
+    const container = document.getElementById('reviewsContainer');
+    container.innerHTML = '';
+    reviews.forEach(review => {
+      const div = document.createElement('div');
+      div.className = 'review';
+      const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+      div.innerHTML = `
+        <div><strong>Rating:</strong> <span style="color: gold;">${stars}</span></div>
+        <div>${review.text}</div>
+      `;
+      container.appendChild(div);
     });
   }
+</script>
 
-
-  function submitReview() {
-    const text = document.getElementById('reviewText').value.trim();
-    if (!text || selectedRating === 0) return;
-  
-    const review = {
-      text: text,
-      rating: selectedRating,
-      date: new Date()
-    };
-
-    reviews.push(review);
-    localStorage.setItem('reviews', JSON.stringify(reviews));
-    document.getElementById('reviewText').value = '';
-    selectedRating = 0;
-    updateStars(0);
-    displayReviews();
-  }
-
-
-  function sortReviews(type) {
-    if (type === 'high') {
-      reviews.sort((a, b) => b.rating - a.rating);
-    } else if (type === 'low') {
-      reviews.sort((a, b) => a.rating - b.rating);
-    } else {
-      reviews.sort((a, b) => b.date - a.date);
-    }
-    displayReviews();
-  }
-
-function displayReviews() {
-  const container = document.getElementById('reviews');
-  container.innerHTML = '';
-  reviews.forEach(review => {
-    const div = document.createElement('div');
-    div.className = 'review';
-
-    const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
-
-    div.innerHTML = `
-      <div><strong>Rating:</strong> <span style="color: gold;">${stars}</span></div>
-      <div>${review.text}</div>
-    `;
-    container.appendChild(div);
-  });
-
-    <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+<script>
   const firebaseConfig = {
     apiKey: "AIzaSyDsisw2KzJEozNdAIpLgdx5XULB7C-hZZs",
     authDomain: "the-friendly-snail.firebaseapp.com",
+    databaseURL: "https://the-friendly-snail-default-rtdb.firebaseio.com",
     projectId: "the-friendly-snail",
-    storageBucket: "the-friendly-snail.firebasestorage.app",
+    storageBucket: "the-friendly-snail.appspot.com",
     messagingSenderId: "948271049573",
-    appId: "1:948271049573:web:ac012a9365d81eb1300f8c",
-    measurementId: "G-9RKMS1JMLF"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-   const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "XXXXXX",
-    appId: "YOUR_APP_ID"
+    appId: "1:948271049573:web:ac012a9365d81eb1300f8c"
   };
 
   firebase.initializeApp(firebaseConfig);
@@ -338,46 +234,26 @@ function displayReviews() {
     reviewForm.reset();
   });
 
-  // Load reviews
   db.ref(`reviews/${productId}`).on('value', (snapshot) => {
     const data = snapshot.val();
     reviewsContainer.innerHTML = '';
-
     if (!data) {
       reviewsContainer.innerHTML = "<p>No reviews yet.</p>";
       return;
     }
-
-    const reviews = Object.values(data).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-    for (const r of reviews) {
-      reviewsContainer.innerHTML += `
-        <div class="review">
-          <strong>${r.name}</strong> – <span class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span><br/>
-          <p>${r.text}</p>
-        </div>
+    const reviewsList = Object.values(data).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    reviewsList.forEach(review => {
+      const div = document.createElement('div');
+      div.className = 'review';
+      const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+      div.innerHTML = `
+        <div><strong>${review.name}</strong> <span style="color: gold;">${stars}</span></div>
+        <div>${review.text}</div>
       `;
-    }
-  });
-
-}
-</script>
-
-<script>
-  function changeImage(img) {
-    const mainImage = document.getElementById('mainImage');
-    if (mainImage && img) {
-      mainImage.src = img.src;
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const firstThumbnail = document.querySelector('.thumbnail');
-    if (firstThumbnail) {
-      changeImage(firstThumbnail);
-    }
+      reviewsContainer.appendChild(div);
+    });
   });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
