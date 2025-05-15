@@ -178,6 +178,10 @@ One Snail Burger should last 2 average-sized mystery snails at least 2 days
 <!-- Scripts -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script>
+  function toggleAccordion(header) {
+    const accordion = header.parentElement;
+    accordion.classList.toggle('open');
+  
   const reviewForm = document.getElementById('reviewForm');
   const reviewsContainer = document.getElementById('reviewsContainer');
   const productId = "snail-burger";
