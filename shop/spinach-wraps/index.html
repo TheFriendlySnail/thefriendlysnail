@@ -6,15 +6,29 @@
   <link rel="stylesheet" href="../../css/style.css">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <style>
+    body { font-family: Arial; padding: 0; max-width: 1500px; margin: auto; }
+    .accordion-section { border-top: 1px solid #ccc; }
+    .accordion-header { cursor: pointer; padding: 10px; background: #eee; font-weight: bold; }
+    .accordion-content { display: none; padding: 10px; background: #f9f9f9; }
+    .accordion-section.open .accordion-content { display: block; }
+
+    .review { border-bottom: 1px solid #ccc; padding: 10px 0; }
+    .stars { color: gold; font-size: 1.2em; }
+    label { display: block; margin-top: 10px; }
+    textarea, input, select, button { width: 100%; padding: 8px; margin-top: 5px; }
+    button { background: #333; color: white; border: none; cursor: pointer; margin-top: 10px; }
+    button:hover { background: #555; }
+  </style>
 </head>
 <body>
 
-<!-- Navigation Bar -->
+<!-- Nav -->
 <nav class="navbar">
   <div class="nav-container">
-    <a href="/" class="logo-link">
-      <img src="../../assets/logo.png" alt="The Friendly Snail Logo" class="logo">
-    </a>
+    <a href="/" class="logo-link"><img src="../../assets/logo.png" alt="The Friendly Snail Logo" class="logo"></a>
     <ul class="nav-links">
       <li><a href="/about/">About</a></li>
       <li><a href="/contact/">Contact</a></li>
@@ -24,82 +38,91 @@
   </div>
 </nav>
 
+<!-- Product -->
 <div class="container">
-  <!-- Product Gallery -->
   <div class="product-images">
-    <img id="mainImage" src="" alt="Main Product Image" class="main-image">
+    <img id="mainImage" src="/assets/spinachwrap1.jpg" alt="Main Product Image" class="main-image">
     <div class="thumbnail-images">
-      <img src="/assets/spinachwrap1.jpg" alt="Thumbnail 1" class="thumbnail" onclick="changeImage(this)">
-      <img src="/assets/spinachwrap2.jpg" alt="Thumbnail 2" class="thumbnail" onclick="changeImage(this)">
-      <img src="/assets/spinachwrap3.jpg" alt="Thumbnail 3" class="thumbnail" onclick="changeImage(this)">
+      <img src="/assets/spinachwrap1.jpg" class="thumbnail" onclick="changeImage(this)">
+      <img src="/assets/spinachwrap2.jpg" class="thumbnail" onclick="changeImage(this)">
+      <img src="/assets/spinachwrap3.jpg" class="thumbnail" onclick="changeImage(this)">
     </div>
   </div>
-  
-
-  <!-- Product Details -->
   <div class="details">
-    <h1>Spinach Wraps</h1>
-    <p class="price" id="price">$4.99</p>
+    <h1>Spinach Wrap</h1>
+    <p class="price" id="price">$11.99</p>
 
     <label for="quantity">Quantity</label>
     <input type="number" id="quantity" value="1" min="1">
 
-    <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+    <label for="size">Size</label>
+    <select id="size" onchange="updatePrice()">
+      <option value="9.99">Small</option>
+      <option value="17.49">Medium</option>
+      <option value="24.99">Large</option>
+    </select>
+
+    <button onclick="addToCart()">Add to Cart</button>
   </div>
 </div>
 
-<!-- Accordion Sections -->
+<!-- Accordion -->
 <div class="accordion">
   <div class="accordion-section">
     <div class="accordion-header" onclick="toggleAccordion(this)">Description</div>
-    <div class="accordion-content">Made from a vibrant swirl of fresh spinach, cucumber, broccoli, and carrot — with a touch of calcium carbonate and nutrient-rich Limnospira — our Spinach Snail Wraps are the ultimate slow-snack for your aquatic friends. Carefully crafted into soft, bite-sized spirals, they support shell health, digestion, and enrichment, all while keeping your tank pristine.<br>
-<br>
+    <div class="accordion-content">
+     Made from a vibrant swirl of fresh spinach, cucumber, broccoli, and carrot — with a touch of calcium carbonate and nutrient-rich Limnospira — our Spinach Snail Wraps are the ultimate slow-snack for your aquatic friends. Carefully crafted into soft, bite-sized spirals, they support shell health, digestion, and enrichment, all while keeping your tank pristine.<br><br>
+
 ✅ 100% vegetarian<br>
 ✅ Snail-safe & aquarium-friendly<br>
-✅ No added preservatives<br>
-<br>
-Let your snails savor every bite — because healthy snacking never looked so green!</div>
+✅ No added preservatives<br><br>
+
+Let your snails savour every bite — because healthy snacking never looked so green!
+    </div>
   </div>
 
   <div class="accordion-section">
     <div class="accordion-header" onclick="toggleAccordion(this)">Ingredients</div>
-    <div class="accordion-content"><em>Ingredients are listed in order of proportions</em><br>
-<br>
+    <div class="accordion-content">
+      <em>Ingredients are listed in order of proportions</em><br><br>
+
 Spinach<br>
-<br>
+
 Cucumber<br>
-<br>
+
 Broccoli<br>
-<br>
+
 Carrot<br>
-<br>
+
 Calcium Carbonate<br>
-<br>
-Limnospira<br>
+
+Limnospira
     </div>
   </div>
 
   <div class="accordion-section">
     <div class="accordion-header" onclick="toggleAccordion(this)">Directions for Use</div>
-    <div class="accordion-content">Get a small, shallow container and fill it with some water from the aquarium<br>
-<br>
+    <div class="accordion-content">
+      Get a small, shallow container and fill it with some water from the aquarium<br>
+
 Gently push on the plastic of the blister pack to push the spinach wrap out<br>
-<br>
+
 Put the spinach wrap in the shallow container and let sit for 5-10 minutes to allow for full thawing<br>
-<br>
+
 Once the wrap is fully thawed, spear it on a weighted skewer or another utensil<br>
-<br>
+
 Gently place it in the tank and pour the water in with it<br>
-<br>
-Let your snails enjoy their brand new snack!<br>
-<br>
-One Spinach Wrap should last 2 average-sized mystery snails at least 1 days<br>
+
+Let your snails enjoy their brand new snack!<br><br>
+
+One Spinach Wrap should last 2 average-sized mystery snails at least 2 days
     </div>
   </div>
 
   <div class="accordion-section">
     <div class="accordion-header" onclick="toggleAccordion(this)">Storage Instructions</div>
-    <div class="accordion-content">Store in a cool, dry place.<br>
+    <div class="accordion-content">
+      Store in a cool, dry place.<br>
 Freeze after opening for maximum freshness.<br>
 Use within 6 months of opening.<br>
     </div>
@@ -109,31 +132,28 @@ Use within 6 months of opening.<br>
   <div class="accordion-section">
     <div class="accordion-header" onclick="toggleAccordion(this)">Reviews</div>
     <div class="accordion-content">
-      <div class="review-form">
+      <h2>Leave a Review</h2>
+      <form id="review-form">
+        <label>Name:</label>
+        <input id="name" required>
+
         <label>Rating:</label>
-        <div class="stars" id="starRating">
-          <span data-value="1">&#9733;</span>
-          <span data-value="2">&#9733;</span>
-          <span data-value="3">&#9733;</span>
-          <span data-value="4">&#9733;</span>
-          <span data-value="5">&#9733;</span>
-        </div>
-
-  <textarea id="reviewText" placeholder="Write your review..."></textarea>
-  <button class="add-to-cart" onclick="submitReview()">Submit Review</button>
-</div>
-
-
-      <div class="sort-reviews">
-        Sort by:
-        <select onchange="sortReviews(this.value)">
-          <option value="latest">Latest</option>
-          <option value="high">Highest Rating</option>
-          <option value="low">Lowest Rating</option>
+        <select id="rating" required>
+          <option value="5">★★★★★</option>
+          <option value="4">★★★★☆</option>
+          <option value="3">★★★☆☆</option>
+          <option value="2">★★☆☆☆</option>
+          <option value="1">★☆☆☆☆</option>
         </select>
-      </div>
 
-      <div id="reviews" class="reviews"></div>
+        <label>Review:</label>
+        <textarea id="text" required></textarea>
+
+        <button type="submit">Submit Review</button>
+      </form>
+
+      <h2>Reviews</h2>
+      <div id="reviewsContainer"></div>
     </div>
   </div>
 </div>
@@ -142,148 +162,121 @@ Use within 6 months of opening.<br>
 <footer class="site-footer">
   <div class="footer-left">
     <p>The Friendly Snail</p>
-   </div>
+  </div>
   <div class="footer-right">
     <p>Email: <a href="mailto:business.gabelawrence@gmail.com">business.gabelawrence@gmail.com</a></p>
     <p>Phone: <a href="tel:+61493474198">0493 474 198</a></p>
   </div>
 </footer>
 
-<!-- Font Awesome -->
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
+<!-- Scripts -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <script>
-  let currentPrice = 4.99;
-  let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
-
-  // On page load, display stored reviews
-  window.onload = function() {
-    displayReviews();
+document.addEventListener("DOMContentLoaded", function () {
+  // Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyDsisw2KzJEozNdAIpLgdx5XULB7C-hZZs",
+    authDomain: "the-friendly-snail.firebaseapp.com",
+    databaseURL: "https://the-friendly-snail-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "the-friendly-snail",
+    storageBucket: "the-friendly-snail.appspot.com",
+    messagingSenderId: "948271049573",
+    appId: "1:948271049573:web:ac012a9365d81eb1300f8c",
   };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
 
-  function changeImage(img) {
-    document.getElementById('mainImage').src = img.src;
-  }
+  const reviewForm = document.getElementById("review-form");
+  const nameInput = document.getElementById("name");
+  const ratingInput = document.getElementById("rating");
+  const textInput = document.getElementById("text");
+  const reviewsContainer = document.getElementById("reviewsContainer");
+  const productId = "snail-burger";
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const firstThumbnail = document.querySelector('.thumbnail');
-    if (firstThumbnail) {
-      document.getElementById('mainImage').src = firstThumbnail.src;
-    }
-  });
+  // Only add event listener if form exists
+  if (reviewForm && nameInput && ratingInput && textInput) {
+    reviewForm.addEventListener("submit", function (e) {
+      e.preventDefault();
 
+      const name = nameInput.value.trim();
+      const rating = parseInt(ratingInput.value);
+      const text = textInput.value.trim();
 
-  function updatePrice() {
-    const selected = document.getElementById('size').value;
-    currentPrice = parseFloat(selected);
-    document.getElementById('price').textContent = `$${currentPrice.toFixed(2)}`;
-  }
-
-  function addToCart() {
-    const qty = parseInt(document.getElementById('quantity').value, 10);
-    const size = document.getElementById('size').options[document.getElementById('size').selectedIndex].text;
-    alert(`Added ${qty} x ${size} Snail Burger(s) to cart for $${(qty * currentPrice).toFixed(2)}.`);
-    // Replace this with Stripe/cart integration as needed
-  }
-
-  function toggleAccordion(header) {
-    const content = header.nextElementSibling;
-    content.style.display = content.style.display === 'block' ? 'none' : 'block';
-  }
-
-  let selectedRating = 0;
-
-  document.querySelectorAll('#starRating span').forEach(star => {
-    star.addEventListener('click', function () {
-      selectedRating = parseInt(this.getAttribute('data-value'));
-      updateStars(selectedRating);
-    });
-  
-    star.addEventListener('mouseover', function () {
-      updateStars(parseInt(this.getAttribute('data-value')), true);
-    });
-
-    star.addEventListener('mouseout', function () {
-      updateStars(selectedRating);
-    });
-  });
-
-  function updateStars(rating, hover = false) {
-    document.querySelectorAll('#starRating span').forEach(star => {
-      const value = parseInt(star.getAttribute('data-value'));
-      star.classList.remove('selected', 'hover');
-      if (hover) {
-        if (value <= rating) star.classList.add('hover');
-      } else {
-        if (value <= rating) star.classList.add('selected');
+      if (!name || !text || isNaN(rating)) {
+        alert("Please fill out all fields with a valid rating.");
+        return;
       }
+
+      const newReview = {
+        name,
+        rating,
+        text,
+        timestamp: new Date().toISOString()
+      };
+
+      db.ref(`reviews/${productId}`).push(newReview).then(() => {
+        alert("Review submitted!");
+        reviewForm.reset();
+      }).catch(err => {
+        alert("Submission failed: " + err.message);
+        console.error("Error submitting review:", err);
+      });
+    });
+
+    // Display reviews
+    db.ref(`reviews/${productId}`).on("value", snapshot => {
+      const data = snapshot.val();
+      reviewsContainer.innerHTML = "";
+
+      if (!data) {
+        reviewsContainer.innerHTML = "<p>No reviews yet.</p>";
+        return;
+      }
+
+      const reviews = Object.values(data).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      reviews.forEach(review => {
+        const div = document.createElement("div");
+        div.className = "review";
+        const stars = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
+        div.innerHTML = `
+          <div><strong>${review.name}</strong> <span class="stars">${stars}</span></div>
+          <div>${review.text}</div>
+        `;
+        reviewsContainer.appendChild(div);
+      });
     });
   }
 
-
-  function submitReview() {
-    const text = document.getElementById('reviewText').value.trim();
-    if (!text || selectedRating === 0) return;
-  
-    const review = {
-      text: text,
-      rating: selectedRating,
-      date: new Date()
-    };
-
-    reviews.push(review);
-    localStorage.setItem('reviews', JSON.stringify(reviews));
-    document.getElementById('reviewText').value = '';
-    selectedRating = 0;
-    updateStars(0);
-    displayReviews();
-  }
-
-
-  function sortReviews(type) {
-    if (type === 'high') {
-      reviews.sort((a, b) => b.rating - a.rating);
-    } else if (type === 'low') {
-      reviews.sort((a, b) => a.rating - b.rating);
-    } else {
-      reviews.sort((a, b) => b.date - a.date);
-    }
-    displayReviews();
-  }
-
-function displayReviews() {
-  const container = document.getElementById('reviews');
-  container.innerHTML = '';
-  reviews.forEach(review => {
-    const div = document.createElement('div');
-    div.className = 'review';
-
-    const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
-
-    div.innerHTML = `
-      <div><strong>Rating:</strong> <span style="color: gold;">${stars}</span></div>
-      <div>${review.text}</div>
-    `;
-    container.appendChild(div);
-  });
-}
-</script>
-
-<script>
-  function changeImage(img) {
-    const mainImage = document.getElementById('mainImage');
-    if (mainImage && img) {
+  // Product image preview
+  window.changeImage = function (img) {
+    const mainImage = document.getElementById("mainImage");
+    if (mainImage) {
       mainImage.src = img.src;
     }
-  }
+  };
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const firstThumbnail = document.querySelector('.thumbnail');
-    if (firstThumbnail) {
-      changeImage(firstThumbnail);
+  // Update price
+  window.updatePrice = function () {
+    const priceInput = document.getElementById("size");
+    const priceDisplay = document.getElementById("price");
+    if (priceInput && priceDisplay) {
+      const price = parseFloat(priceInput.value);
+      priceDisplay.textContent = `$${price.toFixed(2)}`;
     }
-  });
-</script>
+  };
 
+  // Add to cart (stub)
+  window.addToCart = function () {
+    alert("Added to cart! (Cart functionality not implemented yet.)");
+  };
+
+  // Accordion toggle
+  window.toggleAccordion = function (header) {
+    const section = header.parentElement;
+    if (section) section.classList.toggle("open");
+  };
+});
+</script>
 </body>
 </html>
