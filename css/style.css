@@ -559,11 +559,13 @@ body {
 }
 
 .accordion {
-  width: 1000px;
+  width: 100%;
+  max-width: 1200px;
   margin: 2rem auto;
 }
 
 .accordion-section {
+  width: 100%
   background: white;
   border-radius: 5px;
   margin-bottom: 1rem;
@@ -578,6 +580,8 @@ body {
 }
 
 .accordion-content {
+  width: 100%;
+  box-sizing: border-box;
   display: none;
   padding: 1rem;
   border-top: 1px solid #ccc;
