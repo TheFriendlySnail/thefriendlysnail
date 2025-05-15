@@ -230,19 +230,6 @@ One Snail Burger should last 2 average-sized mystery snails at least 2 days
 </script>
 
 <script>
-
-  db.ref(`reviews`).push({
-    text: reviewText,
-    review: reviewInput,
-    timestamp: Date.now()
-  })
-  .then(() => {
-    console.log("Review saved successfully.");
-  })
-  .catch((error) => {
-    console.error("Error saving review:", error);
-  });
-
   const reviewForm = document.getElementById('reviewForm');
   const reviewsContainer = document.getElementById('reviewsContainer');
   const productId = "snail-burger";
@@ -261,7 +248,14 @@ One Snail Burger should last 2 average-sized mystery snails at least 2 days
       timestamp: new Date().toISOString()
     };
 
-    db.ref(`reviews/${productId}`).push(newReview);
+    db.ref(`reviews/${productId}`).push(newReview)
+      .then(() => {
+        console.log("Review saved successfully.");
+      })
+      .catch((error) => {
+        console.error("Error saving review:", error);
+      });
+
     reviewForm.reset();
   });
 
@@ -283,18 +277,6 @@ One Snail Burger should last 2 average-sized mystery snails at least 2 days
       `;
       reviewsContainer.appendChild(div);
     });
-    const submitReview = (index, reviewText) => {
-      db.ref(`reviews/${index}`).push({
-        text: reviewText,
-        timestamp: Date.now()
-      })
-      .then(() => {
-        console.log("Review saved!");
-      })
-      .catch((error) => {
-        console.error("Firebase error:", error);
-      });
-    };
   });
 </script>
 
