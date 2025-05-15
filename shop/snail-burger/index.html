@@ -8,19 +8,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyDsisw2KzJEozNdAIpLgdx5XULB7C-hZZs",
-      authDomain: "the-friendly-snail.firebaseapp.com",
-      projectId: "the-friendly-snail",
-      storageBucket: "the-friendly-snail.firebasestorage.app",
-      messagingSenderId: "948271049573",
-      appId: "1:948271049573:web:ac012a9365d81eb1300f8c",
-      measurementId: "G-9RKMS1JMLF"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-  </script>
   <style>
     body { font-family: Arial; padding: 0; max-width: 1500px; margin: auto; }
     .accordion-section { border-top: 1px solid #ccc; }
@@ -144,7 +131,7 @@ Use within 6 months of opening.<br>
     <div class="accordion-header" onclick="toggleAccordion(this)">Reviews</div>
     <div class="accordion-content">
       <h2>Leave a Review</h2>
-      <form id="reviewForm">
+      <form id="review-form">
         <label>Name:</label>
         <input id="name" required>
 
@@ -182,6 +169,39 @@ Use within 6 months of opening.<br>
 
 <!-- Scripts -->
 <script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script>
+  // Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyDsisw2KzJEozNdAIpLgdx5XULB7C-hZZs",
+    authDomain: "the-friendly-snail.firebaseapp.com",
+    databaseURL: "https://the-friendly-snail-default-rtdb.firebaseio.com",
+    projectId: "the-friendly-snail",
+    storageBucket: "the-friendly-snail.appspot.com",
+    messagingSenderId: "948271049573",
+    appId: "1:948271049573:web:ac012a9365d81eb1300f8c",
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  // Submit Handler
+  document.getElementById("review-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const review = document.getElementById("review").value;
+
+    db.ref("reviews").push({ name, review })
+      .then(() => {
+        alert("Review submitted!");
+        this.reset();
+      })
+      .catch((err) => {
+        alert("Submission failed: " + err.message);
+        console.error(err);
+      });
+  });
+  
   function changeImage(img) {
     document.getElementById("mainImage").src = img.src;
   }
