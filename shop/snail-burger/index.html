@@ -228,6 +228,17 @@ One Snail Burger should last 2 average-sized mystery snails at least 2 days
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
+  db.ref(`reviews/${index}`).push({
+    text: reviewText,
+    timestamp: Date.now()
+  })
+  .then(() => {
+    console.log("Review saved successfully.");
+  })
+  .catch((error) => {
+    console.error("Error saving review:", error);
+  });
+
   const reviewForm = document.getElementById('reviewForm');
   const reviewsContainer = document.getElementById('reviewsContainer');
   const productId = "snail-burger";
