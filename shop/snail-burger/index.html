@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="../../css/style.css">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   <script>
@@ -19,12 +18,16 @@
       appId: "1:948271049573:web:ac012a9365d81eb1300f8c",
       measurementId: "G-9RKMS1JMLF"
     };
-
-      firebase.initializeApp(firebaseConfig);
-      const db = firebase.database();
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
   </script>
   <style>
-    body { font-family: Arial; padding: 0px; max-width: 1500px; margin: auto; }
+    body { font-family: Arial; padding: 0; max-width: 1500px; margin: auto; }
+    .accordion-section { border-top: 1px solid #ccc; }
+    .accordion-header { cursor: pointer; padding: 10px; background: #eee; font-weight: bold; }
+    .accordion-content { display: none; padding: 10px; background: #f9f9f9; }
+    .accordion-section.open .accordion-content { display: block; }
+
     .review { border-bottom: 1px solid #ccc; padding: 10px 0; }
     .stars { color: gold; font-size: 1.2em; }
     label { display: block; margin-top: 10px; }
@@ -35,12 +38,10 @@
 </head>
 <body>
 
-<!-- Navigation Bar -->
+<!-- Nav -->
 <nav class="navbar">
   <div class="nav-container">
-    <a href="/" class="logo-link">
-      <img src="../../assets/logo.png" alt="The Friendly Snail Logo" class="logo">
-    </a>
+    <a href="/" class="logo-link"><img src="../../assets/logo.png" alt="The Friendly Snail Logo" class="logo"></a>
     <ul class="nav-links">
       <li><a href="/about/">About</a></li>
       <li><a href="/contact/">Contact</a></li>
@@ -50,18 +51,16 @@
   </div>
 </nav>
 
+<!-- Product -->
 <div class="container">
-  <!-- Product Gallery -->
   <div class="product-images">
-    <img id="mainImage" src="" alt="Main Product Image" class="main-image">
+    <img id="mainImage" src="/assets/snailburger1.jpg" alt="Main Product Image" class="main-image">
     <div class="thumbnail-images">
-      <img src="/assets/snailburger1.jpg" alt="Thumbnail 1" class="thumbnail" onclick="changeImage(this)">
-      <img src="/assets/snailburger2.jpg" alt="Thumbnail 2" class="thumbnail" onclick="changeImage(this)">
-      <img src="/assets/snailburger3.jpg" alt="Thumbnail 3" class="thumbnail" onclick="changeImage(this)">
+      <img src="/assets/snailburger1.jpg" class="thumbnail" onclick="changeImage(this)">
+      <img src="/assets/snailburger2.jpg" class="thumbnail" onclick="changeImage(this)">
+      <img src="/assets/snailburger3.jpg" class="thumbnail" onclick="changeImage(this)">
     </div>
   </div>
-
-  <!-- Product Details -->
   <div class="details">
     <h1>Snail Burger</h1>
     <p class="price" id="price">$9.99</p>
@@ -76,19 +75,21 @@
       <option value="24.99">Large</option>
     </select>
 
-    <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+    <button onclick="addToCart()">Add to Cart</button>
   </div>
 </div>
 
-<!-- Accordion Sections -->
+<!-- Accordion -->
 <div class="accordion">
   <div class="accordion-section">
     <div class="accordion-header" onclick="toggleAccordion(this)">Description</div>
     <div class="accordion-content">
-      Made from a nutritious blend of cucumber, broccoli, spinach, and carrot, our Snail Burgers are the perfect plant-based snack for your aquatic snails. Gently bound and shaped into easy-to-eat patties, they provide essential nutrients and enrichment while keeping your tank clean and happy.<br><br>
+     Made from a nutritious blend of cucumber, broccoli, spinach, and carrot, our Snail Burgers are the perfect plant-based snack for your aquatic snails. Gently bound and shaped into easy-to-eat patties, they provide essential nutrients and enrichment while keeping your tank clean and happy.<br><br>
+
 ✅ 100% vegetarian<br>
 ✅ Snail-safe & aquarium-friendly<br>
 ✅ No added preservatives<br><br>
+
 Let your snails snack slow and healthy — they’ll love you for it!
     </div>
   </div>
@@ -97,12 +98,16 @@ Let your snails snack slow and healthy — they’ll love you for it!
     <div class="accordion-header" onclick="toggleAccordion(this)">Ingredients</div>
     <div class="accordion-content">
       <em>Ingredients are listed in order of proportions</em><br><br>
-      Broccoli<br><br>
-      Cucumber<br><br>
-      Spinach<br><br>
-      Carrot<br><br>
-      Calcium Carbonate<br><br>
-      Limnospira
+
+Broccoli<br>
+
+Cucumber<br>
+
+Spinach<br>
+
+Carrot<br>
+
+Calcium Carbonate
     </div>
   </div>
 
@@ -129,8 +134,8 @@ One Snail Burger should last 2 average-sized mystery snails at least 2 days
     <div class="accordion-header" onclick="toggleAccordion(this)">Storage Instructions</div>
     <div class="accordion-content">
       Store in a cool, dry place.<br>
-      Freeze after opening for maximum freshness.<br>
-      Use within 6 months of opening.
+Freeze after opening for maximum freshness.<br>
+Use within 6 months of opening.<br>
     </div>
   </div>
 
@@ -176,12 +181,26 @@ One Snail Burger should last 2 average-sized mystery snails at least 2 days
 </footer>
 
 <!-- Scripts -->
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script>
+  function changeImage(img) {
+    document.getElementById("mainImage").src = img.src;
+  }
+
+  function updatePrice() {
+    const price = document.getElementById("size").value;
+    document.getElementById("price").textContent = `$${parseFloat(price).toFixed(2)}`;
+  }
+
+  function addToCart() {
+    alert("Added to cart! (Cart functionality not implemented yet.)");
+  }
+
   function toggleAccordion(header) {
-    const accordion = header.parentElement;
-    accordion.classList.toggle('open');
-  
+    const section = header.parentElement;
+    section.classList.toggle("open");
+  }
+
+  // Firebase review logic
   const reviewForm = document.getElementById('reviewForm');
   const reviewsContainer = document.getElementById('reviewsContainer');
   const productId = "snail-burger";
@@ -202,16 +221,14 @@ One Snail Burger should last 2 average-sized mystery snails at least 2 days
       timestamp: new Date().toISOString()
     };
 
-    db.ref(`reviews/${productId}`).push(newReview)
-      .then(() => {
-        reviewForm.reset();
-      })
-      .catch(error => {
-        console.error("Error saving review:", error);
-      });
+    db.ref(`reviews/${productId}`).push(newReview).then(() => {
+      reviewForm.reset();
+    }).catch(err => {
+      console.error("Error submitting review:", err);
+    });
   });
 
-  db.ref(`reviews/${productId}`).on('value', (snapshot) => {
+  db.ref(`reviews/${productId}`).on('value', snapshot => {
     const data = snapshot.val();
     reviewsContainer.innerHTML = '';
 
@@ -220,20 +237,18 @@ One Snail Burger should last 2 average-sized mystery snails at least 2 days
       return;
     }
 
-    const reviewsList = Object.values(data).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-    reviewsList.forEach(review => {
+    const reviews = Object.values(data).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    reviews.forEach(review => {
       const div = document.createElement('div');
       div.className = 'review';
       const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
       div.innerHTML = `
-        <div><strong>${review.name}</strong> <span style="color: gold;">${stars}</span></div>
+        <div><strong>${review.name}</strong> <span class="stars">${stars}</span></div>
         <div>${review.text}</div>
       `;
       reviewsContainer.appendChild(div);
     });
   });
 </script>
-
-
 </body>
 </html>
