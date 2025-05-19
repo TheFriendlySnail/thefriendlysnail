@@ -70,6 +70,7 @@
         </a>
           <h2>Snail Burgers</h2>
           <p>$9.99+</p>
+      <p class="sales-count">Sales: 0</p>
           <button class="add-to-cart" onclick="addToCart('snail-burger', 'Snail Burger', 9.99)">
             Add to Cart
           </button>
@@ -82,6 +83,7 @@
         </a>
           <h2>Weighted Skewers</h2>
           <p>$0.49</p>
+      <p class="sales-count">Sales: 0</p>
           <button class="add-to-cart" onclick="addToCart('weighted-skewer', 'Weighted Skewer', 0.99)">
             Add to Cart
           </button>
@@ -93,6 +95,7 @@
         </a>
           <h2>Spinach Wraps</h2>
           <p>$11.99+</p>
+      <p class="sales-count">Sales: 0</p>
           <button class="add-to-cart" onclick="addToCart('spinach-wraps', 'Spinach Wraps', 5.99)">
             Add to Cart
           </button>
@@ -112,10 +115,28 @@
   </footer>
 
   <script>
-    function sortProducts() {
+    async function fetchSalesData() {
+      const response = await fetch('/data/sales.json');
+      return await response.json();
+    }
+
+    async function sortProducts() {
       const grid = document.getElementById("productGrid");
       const products = Array.from(grid.getElementsByClassName("product-card"));
       const sortBy = document.getElementById("sort").value;
+
+      const salesData = await fetchSalesData();
+
+      products.forEach(product => {
+        const productName = product.dataset.name;
+        const salesCount = salesData[productName] || 0;
+        product.dataset.sales = salesCount;
+
+        const salesEl = product.querySelector(".sales-count");
+        if (salesEl) {
+          salesEl.textContent = `Sales: ${salesCount}`;
+        }
+      });
 
       products.sort((a, b) => {
         const nameA = a.dataset.name.toLowerCase();
@@ -131,12 +152,19 @@
           case "low": return priceA - priceB;
           case "high": return priceB - priceA;
           case "best": return salesB - salesA;
+          default: return 0;
         }
       });
 
       products.forEach(product => grid.appendChild(product));
     }
+
+  // Load sales on page load
+    window.addEventListener("DOMContentLoaded", sortProducts);
+  // Re-sort on dropdown change
+    document.getElementById("sort").addEventListener("change", sortProducts);
   </script>
+
 
   <script>
   function addToCart(id, name, price) {
