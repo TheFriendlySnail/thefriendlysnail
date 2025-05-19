@@ -167,18 +167,29 @@
 
 
   <script>
-  function addToCart(id, name, price) {
+  function addToCart(id, nameBase, basePrice) {
+    const sizeSelect = document.getElementById(`size-${id}`);
+    const size = sizeSelect ? sizeSelect.value : 'Default';
+    const adjustedPrice = parseFloat(sizeSelect.selectedOptions[0].dataset.price || basePrice);
+
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    const existingItem = cart.find(item => item.id === id);
+    const existingItem = cart.find(item => item.id === id && item.size === size);
     if (existingItem) {
       existingItem.quantity += 1;
     } else {
-      cart.push({ id, name, price, quantity: 1 });
+      cart.push({
+        id,
+        name: `${nameBase} (${size})`,
+        baseName: nameBase,
+        size,
+        price: adjustedPrice,
+        quantity: 1
+      });
     }
 
     localStorage.setItem('cart', JSON.stringify(cart));
-    alert(`${name} added to cart!`);
+    updateCartBadge(); // optional if you're using the cart badge system
   }
 </script>
 
