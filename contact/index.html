@@ -19,7 +19,7 @@
         <li><a href="/contact/">Contact</a></li>
         <li><a href="/shop/">Shop</a></li>
         <li><a href="/checkout/"><i class="fas fa-shopping-cart"></i></a></li>
-          <span class="cart-count" id="cartCount">0</span>
+          <span id="cart-count-badge" class="cart-badge">0</span>
       </ul>
     </div>
   </nav>
@@ -62,5 +62,24 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+<script>
+  // Assume your cart is saved in localStorage under "cart"
+  function updateCartBadge() {
+    const badge = document.getElementById("cart-count-badge");
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+    if (itemCount > 0) {
+      badge.textContent = itemCount;
+      badge.style.display = "inline-block";
+    } else {
+      badge.style.display = "none";
+    }
+  }
+
+  // Call it on page load
+  document.addEventListener("DOMContentLoaded", updateCartBadge);
+</script>
+
 </body>
 </html>
