@@ -268,9 +268,30 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // Add to cart (stub)
-  window.addToCart = function () {
-    alert(`Spinach Wrap added to cart!`);
-  };
+  function addToCart(id, nameBase, basePrice) {
+    const sizeSelect = document.getElementById(`size-${id}`);
+    const size = sizeSelect ? sizeSelect.value : 'Default';
+    const adjustedPrice = parseFloat(sizeSelect.selectedOptions[0].dataset.price || basePrice);
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    const existingItem = cart.find(item => item.id === id && item.size === size);
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({
+        id,
+        name: `${nameBase} (${size})`,
+        baseName: nameBase,
+        size,
+        price: adjustedPrice,
+        quantity: 1
+      });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartBadge(); // optional if you're using the cart badge system
+  }
 
   // Accordion toggle
   window.toggleAccordion = function (header) {
