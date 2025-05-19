@@ -182,5 +182,24 @@
   }
 </script>
 
+<script>
+  // Assume your cart is saved in localStorage under "cart"
+  function updateCartBadge() {
+    const badge = document.getElementById("cart-count-badge");
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+    if (itemCount > 0) {
+      badge.textContent = itemCount;
+      badge.style.display = "inline-block";
+    } else {
+      badge.style.display = "none";
+    }
+  }
+
+  // Call it on page load
+  document.addEventListener("DOMContentLoaded", updateCartBadge);
+</script>
+
 </body>
 </html>
