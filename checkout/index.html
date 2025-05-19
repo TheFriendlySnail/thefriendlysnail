@@ -143,6 +143,29 @@
     }
   }
 
+const stripe = Stripe('pk_live_51RQLaPL0K3j8XkoxiDAqLhWPRbNuWjmrrANIKllFasPB3mjNPrg6G92JAxb8VVPR40Xap9VUR4l8oQmXOUV7CATH00AkRxMICs');
+
+async function checkout() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  if (cart.length === 0) {
+    alert('Your cart is empty');
+    return;
+  }
+
+  const response = await fetch('/create-checkout-session', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ items: cart }),
+  });
+
+  const session = await response.json();
+
+  const result = await stripe.redirectToCheckout({ sessionId: session.id });
+  if (result.error) {
+    alert(result.error.message);
+  }
+}
+
   // Call it on page load
   document.addEventListener("DOMContentLoaded", updateCartBadge);
 </script>
