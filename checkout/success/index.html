@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Successful</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+      padding: 50px 20px;
+    }
+    .success-container {
+      background-color: #fff;
+      padding: 40px;
+      max-width: 600px;
+      margin: 0 auto;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #4BB543;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      color: #555;
+    }
+    a {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #4BB543;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    a:hover {
+      background-color: #3da93c;
+    }
+  </style>
+</head>
+<body>
+  <div class="success-container">
+    <h1>✅ Thank You for Your Purchase!</h1>
+    <p>Your payment was successful, and your order is being processed.</p>
+    <a href="/index.html">Return to Home</a>
+  </div>
+
+  <script>
+    // Optional: Update sales data and clear the cart
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    if (cart.length > 0) {
+      fetch('/api/update-sales', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ items: cart })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Sales updated:', data);
+        localStorage.removeItem('cart'); // Clear the cart
+      })
+      .catch(error => {
+        console.error('Error updating sales:', error);
+      });
+    }
+  </script>
+</body>
+</html>
