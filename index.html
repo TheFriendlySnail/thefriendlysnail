@@ -11,95 +11,95 @@
 <body>
 
   <!-- Navigation Bar -->
-<nav class="navbar">
-  <div class="nav-container">
-    <a href="/" class="logo-link">
-      <img src="../assets/logo.png" alt="The Friendly Snail Logo" class="logo">
-    </a>
-    <ul class="nav-links">
-      <li><a href="/about/">About</a></li>
-      <li><a href="/contact/">Contact</a></li>
-      <li><a href="/shop/">Shop</a></li>
-      <li><a href="/checkout/"><i class="fas fa-shopping-cart"></i></a></li>
-        <span id="cart-count-badge" class="cart-badge">0</span>
-    </ul>
-  </div>
-</nav>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="logo-link">
+        <img src="../assets/logo.png" alt="The Friendly Snail Logo" class="logo">
+      </a>
+      <ul class="nav-links">
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+        <li><a href="/shop/">Shop</a></li>
+        <li>
+          <a href="/checkout/" aria-label="Shopping Cart">
+            <i class="fas fa-shopping-cart"></i>
+          </a>
+          <span id="cart-count-badge" class="cart-badge" aria-label="Cart item count">0</span>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-  <!-- BANNER SECTION -->
+  <!-- Banner Section -->
   <header class="banner">
     <div class="overlay">
-      <h1 style="color:red">!NOT IN USE YET - DO NOT ORDER!</h1>
+      <h1 style="color:red;">!NOT IN USE YET - DO NOT ORDER!</h1>
     </div>
   </header>
 
+  <!-- Featured Products -->
+  <section class="featured-products">
+    <h2>Featured Products</h2>
 
-  <!-- Page Content -->
-<section class="featured-products">
-  <h2>Featured Products</h2>
-
-  <div class="product">
-    <img src="/assets/snail-burger.jpg" alt="Snail Burger" class="product-image">
-    <h3 class="product-name">Snail Burger</h3>
-    <p class="product-price">From $9.99</p>
-    <a href="/shop/snail-burger" class="add-to-cart">Shop Now</a>
-  </div>
-
-  <div class="product">
-    <img src="/assets/weighted-skewer.jpg" alt="Weighted Skewer" class="product-image">
-    <h3 class="product-name">Weighted Skewer</h3>
-    <p class="product-price">$0.49</p>
-    <a href="/shop/weighted-skewer" class="add-to-cart">Shop Now</a>
-  </div>
-
-  <div class="product">
-    <img src="/assets/spinach.jpg" alt="Spinach Wrap" class="product-image">
-    <h3 class="product-name">Spinach Wraps</h3>
-    <p class="product-price">From $11.99</p>
-    <a href="/shop/spinach-wraps" class="add-to-cart">Shop Now</a>
-  </div>
-</section>
-</section>
-
-<section class="who-we-are">
-  <div class="who-we-are-content">
-    <img src="/assets/logo.png" alt="The Friendly Snail Logo" class="who-we-are-logo">
-    <div class="who-we-are-text">
-      <h2>Who We Are</h2>
-      <p>Welcome to The Friendly Snail, where we make nutritious veggie snacks like cucumber, broccoli, spinach, and carrot “snail burgers” — perfect for happy, healthy tank friends. Made with love for the slowest stars of your aquarium.</p>
-      <a href="/about" class="learn-more-button">Learn More</a>
+    <div class="product">
+      <img src="/assets/snail-burger.jpg" alt="Snail Burger" class="product-image">
+      <h3 class="product-name">Snail Burger</h3>
+      <p class="product-price">From $9.99</p>
+      <a href="/shop/snail-burger" class="add-to-cart">Shop Now</a>
     </div>
-  </div>
-</section>
 
-<footer class="site-footer">
-  <div class="footer-left">
-    <p>The Friendly Snail</p>
-  </div>
-  <div class="footer-right">
-    <p>Email: <a href="mailto:business.gabelawrence@gmail.com">business.gabelawrence@gmail.com</a></p>
-    <p>Phone: <a href="tel:+61493474198">0493 474 198</a></p>
-  </div>
-</footer>
+    <div class="product">
+      <img src="/assets/weighted-skewer.jpg" alt="Weighted Skewer" class="product-image">
+      <h3 class="product-name">Weighted Skewer</h3>
+      <p class="product-price">$0.49</p>
+      <a href="/shop/weighted-skewer" class="add-to-cart">Shop Now</a>
+    </div>
 
-<script>
-  // Assume your cart is saved in localStorage under "cart"
-  function updateCartBadge() {
-    const badge = document.getElementById("cart-count-badge");
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    <div class="product">
+      <img src="/assets/spinach.jpg" alt="Spinach Wrap" class="product-image">
+      <h3 class="product-name">Spinach Wraps</h3>
+      <p class="product-price">From $11.99</p>
+      <a href="/shop/spinach-wraps" class="add-to-cart">Shop Now</a>
+    </div>
+  </section>
 
-    if (itemCount > 0) {
+  <!-- Who We Are Section -->
+  <section class="who-we-are">
+    <div class="who-we-are-content">
+      <img src="/assets/logo.png" alt="The Friendly Snail Logo" class="who-we-are-logo">
+      <div class="who-we-are-text">
+        <h2>Who We Are</h2>
+        <p>Welcome to The Friendly Snail, where we make nutritious veggie snacks like cucumber, broccoli, spinach, and carrot “snail burgers” — perfect for happy, healthy tank friends. Made with love for the slowest stars of your aquarium.</p>
+        <a href="/about/" class="learn-more-button">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-left">
+      <p>The Friendly Snail</p>
+    </div>
+    <div class="footer-right">
+      <p>Email: <a href="mailto:business.gabelawrence@gmail.com">business.gabelawrence@gmail.com</a></p>
+      <p>Phone: <a href="tel:+61493474198">0493 474 198</a></p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Update the cart badge with item count from localStorage
+    function updateCartBadge() {
+      const badge = document.getElementById("cart-count-badge");
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const itemCount = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+
       badge.textContent = itemCount;
-      badge.style.display = "inline-block";
-    } else {
-      badge.style.display = "none";
+      badge.style.display = itemCount > 0 ? "inline-block" : "none";
     }
-  }
 
-  // Call it on page load
-  document.addEventListener("DOMContentLoaded", updateCartBadge);
-</script>
+    document.addEventListener("DOMContentLoaded", updateCartBadge);
+  </script>
 
 </body>
 </html>
