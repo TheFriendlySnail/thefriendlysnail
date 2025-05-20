@@ -2,35 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>About Us – The Friendly Snail</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="icon" href="/favicon.png" type="image/png">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="icon" href="/favicon.png" type="image/png" />
 </head>
 <body>
 
   <!-- Navigation Bar -->
-<nav class="navbar">
-  <div class="nav-container">
-    <a href="/" class="logo-link">
-      <img src="../assets/logo.png" alt="The Friendly Snail Logo" class="logo">
-    </a>
-    <ul class="nav-links">
-      <li><a href="/about/">About</a></li>
-      <li><a href="/contact/">Contact</a></li>
-      <li><a href="/shop/">Shop</a></li>
-      <li><a href="/checkout/"><i class="fas fa-shopping-cart"></i></a></li>
-        <span id="cart-count-badge" class="cart-badge">0</span>
-    </ul>
-  </div>
-</nav>
-
-
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="logo-link">
+        <img src="../assets/logo.png" alt="The Friendly Snail Logo" class="logo" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+        <li><a href="/shop/">Shop</a></li>
+        <li>
+          <a href="/checkout/"><i class="fas fa-shopping-cart"></i></a>
+        </li>
+        <span id="cart-count-badge" class="cart-badge" style="display:none;">0</span>
+      </ul>
+    </div>
+  </nav>
 
   <!-- Hero Section -->
   <header class="about-hero">
-    <img src="/assets/banner.jpg" alt="Banner">
+    <img src="/assets/banner.jpg" alt="Banner" />
     <div class="hero-text">
       <h1>About The Friendly Snail</h1>
     </div>
@@ -38,19 +41,23 @@
 
   <!-- Our Story -->
   <section class="about-section">
-    <img src="/assets/story.jpg" alt="Our Story">
+    <img src="/assets/story.jpg" alt="Our Story" />
     <div>
       <h2>Our Story</h2>
-      <p>It all started with a snail and a cucumber slice. The Friendly Snail was born from a passion for providing the best veggie snacks for aquarium pets — from crunchy carrot plates to delicious snail burgers. Our goal is to make aquatic life tastier, healthier, and happier.</p>
+      <p>
+        It all started with a snail and a cucumber slice. The Friendly Snail was born from a passion for providing the best veggie snacks for aquarium pets — from crunchy carrot plates to delicious snail burgers. Our goal is to make aquatic life tastier, healthier, and happier.
+      </p>
     </div>
   </section>
 
   <!-- Our Mission -->
   <section class="about-section reverse">
-    <img src="/assets/mission.jpg" alt="Our Mission">
+    <img src="/assets/mission.jpg" alt="Our Mission" />
     <div>
       <h2>Our Mission</h2>
-      <p>We’re dedicated to crafting wholesome, eco-friendly snacks for freshwater snails, shrimp, and herbivorous fish. All ingredients are selected with care and love, because every little creature deserves a gourmet experience.</p>
+      <p>
+        We’re dedicated to crafting wholesome, eco-friendly snacks for freshwater snails, shrimp, and herbivorous fish. All ingredients are selected with care and love, because every little creature deserves a gourmet experience.
+      </p>
     </div>
   </section>
 
@@ -59,12 +66,12 @@
     <h2>Meet the Snail Chefs</h2>
     <div class="team-members">
       <div class="team-member">
-        <img src="/assets/chef1.jpg" alt="Chef Snail 1">
+        <img src="/assets/chef1.jpg" alt="Chef Snail 1" />
         <h3>Ernie</h3>
         <p>Executive Snail Chef & Leaf Cruncher</p>
       </div>
       <div class="team-member">
-        <img src="/assets/chef2.jpg" alt="Chef Snail 2">
+        <img src="/assets/chef2.jpg" alt="Chef Snail 2" />
         <h3>Celina</h3>
         <p>Head of Carrot Creativity</p>
       </div>
@@ -85,24 +92,21 @@
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
-<script>
-  // Assume your cart is saved in localStorage under "cart"
-  function updateCartBadge() {
-    const badge = document.getElementById("cart-count-badge");
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-    if (itemCount > 0) {
-      badge.textContent = itemCount;
-      badge.style.display = "inline-block";
-    } else {
-      badge.style.display = "none";
+  <script>
+    // Update cart badge based on localStorage "cart"
+    function updateCartBadge() {
+      const badge = document.getElementById("cart-count-badge");
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+      if (itemCount > 0) {
+        badge.textContent = itemCount;
+        badge.style.display = "inline-block";
+      } else {
+        badge.style.display = "none";
+      }
     }
-  }
-
-  // Call it on page load
-  document.addEventListener("DOMContentLoaded", updateCartBadge);
-</script>
+    document.addEventListener("DOMContentLoaded", updateCartBadge);
+  </script>
 
 </body>
 </html>
