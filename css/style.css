@@ -725,3 +725,34 @@ main {
   border-radius: 5px;
   cursor: pointer;
 }
+
+.success-container {
+  background-color: #fff;
+  padding: 40px;
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+h1 {
+  color: #4BB543;
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+}
+p {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  color: #555;
+}
+a {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #4BB543;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+a:hover {
+  background-color: #3da93c;
+}
