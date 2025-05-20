@@ -747,12 +747,12 @@ p {
 a {
   display: inline-block;
   padding: 12px 24px;
-  background-color: #4BB543;
+  background-color: #333;
   color: white;
   text-decoration: none;
   border-radius: 5px;
   font-weight: bold;
 }
 a:hover {
-  background-color: #3da93c;
+  background-color: #555;
 }
