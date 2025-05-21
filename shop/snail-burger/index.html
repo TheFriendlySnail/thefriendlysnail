@@ -150,24 +150,24 @@ Use within 6 months of opening.<br>
           </div>
           <div class="accordion-content">
             <h2>Leave a Review</h2>
-            <form id="review-form">
-              <label>Name:</label>
-              <input id="name" required />
+              <form id="review-form">
+                <label for="name">Name:</label>
+                <input id="name" required />
 
-              <label>Rating:</label>
-              <select id="rating" required>
-                <option value="5">★★★★★</option>
-                <option value="4">★★★★☆</option>
-                <option value="3">★★★☆☆</option>
-                <option value="2">★★☆☆☆</option>
-                <option value="1">★☆☆☆☆</option>
-              </select>
-  
-              <label>Review:</label>
-              <textarea id="text" required></textarea>
+                <label for="rating">Rating:</label>
+                <select id="rating" required>
+                  <option value="5">★★★★★</option>
+                  <option value="4">★★★★☆</option>
+                  <option value="3">★★★☆☆</option>
+                  <option value="2">★★☆☆☆</option>
+                  <option value="1">★☆☆☆☆</option>
+                </select>
 
-              <button type="submit">Submit Review</button>
-            </form>
+                <label for="text">Review:</label>
+                <textarea id="text" required></textarea>
+
+                <button type="submit">Submit Review</button>
+              </form>
 
             <h2>Reviews</h2>
             <div id="reviewsContainer"></div>
