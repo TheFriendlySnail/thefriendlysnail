@@ -581,14 +581,21 @@ body {
 
 .accordion-content {
   width: 100%;
-  box-sizing: border-box;
   display: none;
-  padding: 1rem;
+  padding: 10px;
   border-top: 1px solid #ccc;
+  flex-direction: column; /* <-- prevents inline flex behavior */
 }
 
 .accordion-section.open .accordion-content {
   display: block;
+}
+
+/* Ensure the form inside accordion is vertical */
+.accordion-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .review-form textarea {
