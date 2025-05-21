@@ -587,6 +587,10 @@ body {
   border-top: 1px solid #ccc;
 }
 
+.accordion-section.open .accordion-content {
+  display: block;
+}
+
 .review-form textarea {
   width: 100%;
   height: 100px;
@@ -669,68 +673,4 @@ main {
   object-fit: cover;
   border-radius: 12px;
   margin-right: 20px;
-}
-
-.item-details {
-  flex-grow: 1;
-}
-
-.item-name {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.item-variables {
-  font-size: 0.9em;
-  color: #666;
-  margin-bottom: 5px;
-}
-
-.quantity {
-  display: flex;
-  align-items: center;
-}
-
-.quantity button {
-  width: 30px;
-  height: 30px;
-}
-
-.remove {
-  color: red;
-  cursor: pointer;
-  margin-left: 15px;
-}
-
-.item-price {
-  font-weight: bold;
-  margin-left: 20px;
-}
-
-.checkout-summary {
-  text-align: right;
-  margin-top: 30px;
-}
-
-.checkout-summary h2 {
-  margin-bottom: 10px;
-}
-
-.checkout-summary button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  background: green;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.success-container {
-  background-color: #fff;
-  padding: 40px;
-  max-width: 600px;
-  margin: 0 auto;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
