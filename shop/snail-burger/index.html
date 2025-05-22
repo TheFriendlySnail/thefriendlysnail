@@ -209,22 +209,48 @@ Use within 6 months of opening.<br>
         document.getElementById("price").innerText = `$${price.toFixed(2)}`;
       }
 
-      function addToCart(id, name) {
-        const quantity = parseInt(document.getElementById("quantity").value);
-        const sizePrice = parseFloat(
-          document.getElementById("size-snail-burger").value
-        );
+function addToCart(id, name) {
+  const quantity = parseInt(document.getElementById("quantity").value);
+  const sizeSelect = document.getElementById("size-snail-burger");
+  const sizeLabel = sizeSelect.options[sizeSelect.selectedIndex].text;
+  const sizePrice = parseFloat(sizeSelect.value);
+  const image = document.getElementById("mainImage").src;
 
-        alert(
-          `${name} (${quantity}) added to cart at $${(
-            sizePrice * quantity
-          ).toFixed(2)}!`
-        );
+  const cartItem = {
+    id: id,
+    name: name,
+    quantity: quantity,
+    price: sizePrice,
+    variables: sizeLabel,
+    image: image
+  };
 
-        const badge = document.getElementById("cart-count-badge");
-        const currentCount = parseInt(badge.textContent) || 0;
-        badge.textContent = currentCount + quantity;
-      }
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  // If item with same ID and variables exists, increase quantity
+  const existingIndex = cart.findIndex(
+    (item) => item.id === id && item.variables === sizeLabel
+  );
+
+  if (existingIndex > -1) {
+    cart[existingIndex].quantity += quantity;
+  } else {
+    cart.push(cartItem);
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  updateCartBadge();
+}
+
+
+function updateCartBadge() {
+  const badge = document.getElementById("cart-count-badge");
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  badge.textContent = totalItems;
+}
+
 
       document.addEventListener("DOMContentLoaded", function () {
         const firebaseConfig = {
