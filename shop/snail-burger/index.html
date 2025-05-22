@@ -5,7 +5,10 @@
     <title>Snail Burger - The Friendly Snail</title>
     <link rel="stylesheet" href="../../css/style.css" />
     <link rel="icon" href="/favicon.png" type="image/png" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   </head>
@@ -87,13 +90,11 @@
       <div class="accordion-section">
         <div class="accordion-header" onclick="toggleAccordion(this)">Description</div>
         <div class="accordion-content">
-         Made from a nutritious blend of cucumber, broccoli, spinach, and carrot, our Snail Burgers are the perfect plant-based snack for your aquatic snails. Gently bound and shaped into easy-to-eat patties, they provide essential nutrients and enrichment while keeping your tank clean and happy.<br><br>
-
-        ✅ 100% vegetarian<br>
-        ✅ Snail-safe & aquarium-friendly<br>
-        ✅ No added preservatives<br><br>
-
-        Let your snails snack slow and healthy — they’ll love you for it!
+          Made from a nutritious blend of cucumber, broccoli, spinach, and carrot, our Snail Burgers are the perfect plant-based snack for your aquatic snails. Gently bound and shaped into easy-to-eat patties, they provide essential nutrients and enrichment while keeping your tank clean and happy.<br><br>
+          ✅ 100% vegetarian<br>
+          ✅ Snail-safe & aquarium-friendly<br>
+          ✅ No added preservatives<br><br>
+          Let your snails snack slow and healthy — they’ll love you for it!
         </div>
       </div>
 
@@ -101,77 +102,62 @@
         <div class="accordion-header" onclick="toggleAccordion(this)">Ingredients</div>
         <div class="accordion-content">
           <em>Ingredients are listed in order of proportions</em><br><br>
-
-Broccoli<br>
-
-Cucumber<br>
-
-Spinach<br>
-
-Carrot<br>
-
-Calcium Carbonate<br>
-
-Limnospira
+          Broccoli<br>
+          Cucumber<br>
+          Spinach<br>
+          Carrot<br>
+          Calcium Carbonate<br>
+          Limnospira
         </div>
       </div>
 
       <div class="accordion-section">
         <div class="accordion-header" onclick="toggleAccordion(this)">Directions for Use</div>
         <div class="accordion-content">
-      Get a small, shallow container and fill it with some water from the aquarium<br>
-
-Gently push on the plastic of the blister pack to push the snail burger out<br>
-
-Put the snail burger in the shallow container and let sit for 5-10 minutes to allow for full thawing<br>
-
-Once the burger is fully thawed, spear it on a weighted skewer or another utensil<br>
-
-Gently place it in the tank and pour the water in with it<br>
-
-Let your snails enjoy their brand new snack!<br><br>
-
-One Snail Burger should last 2 average-sized mystery snails at least 2 days
+          Get a small, shallow container and fill it with some water from the aquarium<br>
+          Gently push on the plastic of the blister pack to push the snail burger out<br>
+          Put the snail burger in the shallow container and let sit for 5-10 minutes to allow for full thawing<br>
+          Once the burger is fully thawed, spear it on a weighted skewer or another utensil<br>
+          Gently place it in the tank and pour the water in with it<br>
+          Let your snails enjoy their brand new snack!<br><br>
+          One Snail Burger should last 2 average-sized mystery snails at least 2 days
         </div>
       </div>
 
       <div class="accordion-section">
         <div class="accordion-header" onclick="toggleAccordion(this)">Storage Instructions</div>
         <div class="accordion-content">
-      Store in a cool, dry place.<br>
-Freeze after opening for maximum freshness.<br>
-Use within 6 months of opening.<br>
+          Store in a cool, dry place.<br>
+          Freeze after opening for maximum freshness.<br>
+          Use within 6 months of opening.<br>
         </div>
       </div>
-      <div class="accordion">
-        <div class="accordion-section">
-          <div class="accordion-header" onclick="toggleAccordion(this)">
-            Reviews
-          </div>
-          <div class="accordion-content">
-            <h2>Leave a Review</h2>
-              <form id="review-form">
-                <label for="name">Name:</label>
-                <input id="name" required />
 
-                <label for="rating">Rating:</label>
-                <select id="rating" required>
-                  <option value="5">★★★★★</option>
-                  <option value="4">★★★★☆</option>
-                  <option value="3">★★★☆☆</option>
-                  <option value="2">★★☆☆☆</option>
-                  <option value="1">★☆☆☆☆</option>
-                </select>
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">Reviews</div>
+        <div class="accordion-content">
+          <h2>Leave a Review</h2>
+          <form id="review-form">
+            <label for="name">Name:</label>
+            <input id="name" required />
 
-                <label for="text">Review:</label>
-                <textarea id="text" required></textarea>
+            <label for="rating">Rating:</label>
+            <select id="rating" required>
+              <option value="5">★★★★★</option>
+              <option value="4">★★★★☆</option>
+              <option value="3">★★★☆☆</option>
+              <option value="2">★★☆☆☆</option>
+              <option value="1">★☆☆☆☆</option>
+            </select>
 
-                <button type="submit">Submit Review</button>
-              </form>
+            <label for="text">Review:</label>
+            <textarea id="text" required></textarea>
 
-            <h2>Reviews</h2>
-            <div id="reviewsContainer"></div>
-          </div>
+            <button type="submit">Submit Review</button>
+          </form>
+
+          <h2>Reviews</h2>
+          <div id="reviewsContainer"></div>
         </div>
       </div>
     </div>
@@ -184,9 +170,7 @@ Use within 6 months of opening.<br>
       <div class="footer-right">
         <p>
           Email:
-          <a href="mailto:business.gabelawrence@gmail.com"
-            >business.gabelawrence@gmail.com</a
-          >
+          <a href="mailto:business.gabelawrence@gmail.com">business.gabelawrence@gmail.com</a>
         </p>
         <p>Phone: <a href="tel:+61493474198">0493 474 198</a></p>
       </div>
@@ -209,54 +193,48 @@ Use within 6 months of opening.<br>
         document.getElementById("price").innerText = `$${price.toFixed(2)}`;
       }
 
-function addToCart(id, name) {
-  const quantity = parseInt(document.getElementById("quantity").value);
-  const sizeSelect = document.getElementById("size-snail-burger");
-  const sizeLabel = sizeSelect.options[sizeSelect.selectedIndex].text;
-  const sizePrice = parseFloat(sizeSelect.value);
-  const image = document.getElementById("mainImage").src;
+      function addToCart(id, name) {
+        const quantity = parseInt(document.getElementById("quantity").value);
+        const sizeSelect = document.getElementById("size-snail-burger");
+        const sizeLabel = sizeSelect.options[sizeSelect.selectedIndex].text;
+        const sizePrice = parseFloat(sizeSelect.value);
+        const image = document.getElementById("mainImage").src;
 
-  const cartItem = {
-    id: id,
-    name: name,
-    quantity: quantity,
-    price: sizePrice,
-    variables: sizeLabel,
-    image: image
-  };
+        const cartItem = {
+          id: id,
+          name: name,
+          quantity: quantity,
+          price: sizePrice,
+          variables: sizeLabel,
+          image: image,
+        };
 
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  // If item with same ID and variables exists, increase quantity
-  const existingIndex = cart.findIndex(
-    (item) => item.id === id && item.variables === sizeLabel
-  );
+        const existingIndex = cart.findIndex(
+          (item) => item.id === id && item.variables === sizeLabel
+        );
 
-  if (existingIndex > -1) {
-    cart[existingIndex].quantity += quantity;
-  } else {
-    cart.push(cartItem);
-  }
+        if (existingIndex > -1) {
+          cart[existingIndex].quantity += quantity;
+        } else {
+          cart.push(cartItem);
+        }
 
-  localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartBadge();
+      }
 
-  document.addEventListener("DOMContentLoaded", function () {
-  updateCartBadge();
-  // Existing code…
-});
-
-}
-
-
-function updateCartBadge() {
-  const badge = document.getElementById("cart-count-badge");
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  badge.textContent = totalItems;
-}
-
+      function updateCartBadge() {
+        const badge = document.getElementById("cart-count-badge");
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        badge.textContent = totalItems;
+      }
 
       document.addEventListener("DOMContentLoaded", function () {
+        updateCartBadge();
+
         const firebaseConfig = {
           apiKey: "AIzaSyDsisw2KzJEozNdAIpLgdx5XULB7C-hZZs",
           authDomain: "the-friendly-snail.firebaseapp.com",
