@@ -240,7 +240,11 @@ function addToCart(id, name) {
 
   localStorage.setItem("cart", JSON.stringify(cart));
 
+  document.addEventListener("DOMContentLoaded", function () {
   updateCartBadge();
+  // Existing code…
+});
+
 }
 
 
