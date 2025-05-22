@@ -567,35 +567,36 @@ body {
 }
 
 .accordion-section {
-  width: 100%
+  width: 100%;
   background: white;
   border-radius: 5px;
   margin-bottom: 1rem;
   overflow: hidden;
-}
-
-.accordion-header {
-  padding: 1rem;
-  background: #eee;
-  cursor: pointer;
-  font-weight: bold;
+  display: flex;
+  flex-direction: column; /* Force vertical stacking */
 }
 
 .accordion-content {
   width: 100%;
   display: flex;
-  justify-content: center; /* center the form */
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center;
   padding: 1rem;
   box-sizing: border-box;
 }
 
+.accordion-content h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
 .accordion-content form {
   width: 100%;
-  max-width: 1000px;
+  max-width: 700px;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  box-sizing: border-box;
+  margin-bottom: 2rem;
 }
 
 .accordion-content input,
@@ -610,6 +611,11 @@ body {
   box-sizing: border-box;
 }
 
+.reviews {
+  width: 100%;
+  max-width: 700px;
+  margin-top: 1rem;
+}
 
 .accordion-section.open .accordion-content {
   display: block;
@@ -619,10 +625,6 @@ body {
   max-width: 900px;
   width: 100%;
   height: 100px;
-}
-
-.reviews {
-  margin-top: 1rem;
 }
 
 .review {
