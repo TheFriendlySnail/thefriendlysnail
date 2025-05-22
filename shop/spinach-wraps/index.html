@@ -1,91 +1,107 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Spinach Wraps - The Friendly Snail</title>
-  <link rel="stylesheet" href="../../css/style.css">
-  <link rel="icon" href="/favicon.png" type="image/png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-  <style>
-    body { font-family: Arial; padding: 0; max-width: 1500px; margin: auto; }
-    .accordion-section { border-top: 1px solid #ccc; }
-    .accordion-header { cursor: pointer; padding: 10px; background: #eee; font-weight: bold; }
-    .accordion-content { display: none; padding: 10px; background: #f9f9f9; }
-    .accordion-section.open .accordion-content { display: block; }
+  <head>
+    <meta charset="UTF-8" />
+    <title>Spinach Wraps - The Friendly Snail</title>
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  </head>
 
-    .review { border-bottom: 1px solid #ccc; padding: 10px 0; }
-    .stars { color: gold; font-size: 1.2em; }
-    label { display: block; margin-top: 10px; }
-    textarea, input, select, button { width: 100%; padding: 8px; margin-top: 5px; }
-    button { background: #333; color: white; border: none; cursor: pointer; margin-top: 10px; }
-    button:hover { background: #555; }
-  </style>
-</head>
-<body>
+  <body>
+    <!-- Nav -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="/" class="logo-link"
+          ><img
+            src="../../assets/logo.png"
+            alt="The Friendly Snail Logo"
+            class="logo"
+        /></a>
+        <ul class="nav-links">
+          <li><a href="/about/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/shop/">Shop</a></li>
+          <li>
+            <a href="/cart/"><i class="fas fa-shopping-cart"></i></a>
+            <span id="cart-count-badge" class="cart-badge">0</span>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-<!-- Nav -->
-<nav class="navbar">
-  <div class="nav-container">
-    <a href="/" class="logo-link"><img src="../../assets/logo.png" alt="The Friendly Snail Logo" class="logo"></a>
-    <ul class="nav-links">
-      <li><a href="/about/">About</a></li>
-      <li><a href="/contact/">Contact</a></li>
-      <li><a href="/shop/">Shop</a></li>
-      <li><a href="/checkout/"><i class="fas fa-shopping-cart"></i></a></li>
-        <span id="cart-count-badge" class="cart-badge">0</span>
-    </ul>
-  </div>
-</nav>
+    <!-- Product -->
+    <div class="container">
+      <div class="product-images">
+        <img
+          id="mainImage"
+          src="/assets/spinach1.jpg"
+          alt="Main Product Image"
+          class="main-image"
+        />
+        <div class="thumbnail-images">
+          <img
+            src="/assets/spinach1.jpg"
+            class="thumbnail"
+            onclick="changeImage(this)"
+          />
+          <img
+            src="/assets/spinach2.jpg"
+            class="thumbnail"
+            onclick="changeImage(this)"
+          />
+          <img
+            src="/assets/spinach3.jpg"
+            class="thumbnail"
+            onclick="changeImage(this)"
+          />
+        </div>
+      </div>
+      <div class="details">
+        <h1>Spinach Wrap</h1>
+        <p class="price" id="price">$11.99</p>
 
-<!-- Product -->
-<div class="container">
-  <div class="product-images">
-    <img id="mainImage" src="/assets/spinachwrap1.jpg" alt="Main Product Image" class="main-image">
-    <div class="thumbnail-images">
-      <img src="/assets/spinachwrap1.jpg" class="thumbnail" onclick="changeImage(this)">
-      <img src="/assets/spinachwrap2.jpg" class="thumbnail" onclick="changeImage(this)">
-      <img src="/assets/spinachwrap3.jpg" class="thumbnail" onclick="changeImage(this)">
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" value="1" min="1" />
+
+        <label for="size-snail-burger">Size</label>
+        <select id="size-snail-burger" onchange="updatePrice()">
+          <option value="11.99">Small</option>
+          <option value="19.99">Medium</option>
+          <option value="27.99">Large</option>
+        </select>
+
+        <button
+          class="add-to-cart"
+          onclick="addToCart('snail-burger', 'Snail Burger')"
+        >
+          Add to Cart
+        </button>
+      </div>
     </div>
-  </div>
-  <div class="details">
-    <h1>Spinach Wrap</h1>
-    <p class="price" id="price">$11.99</p>
 
-    <label for="quantity">Quantity</label>
-    <input type="number" id="quantity" value="1" min="1">
-
-    <label for="size">Size</label>
-    <select id="size" onchange="updatePrice()">
-      <option value="11.99">Small</option>
-      <option value="17.49">Medium</option>
-      <option value="24.99">Large</option>
-    </select>
-
-    <button class="add-to-cart" onclick="addToCart('spinach-wraps', 'Spinach Wraps', 11.99)">Add to Cart</button>
-  </div>
-</div>
-
-<!-- Accordion -->
-<div class="accordion">
-  <div class="accordion-section">
-    <div class="accordion-header" onclick="toggleAccordion(this)">Description</div>
-    <div class="accordion-content">
-     Made from a vibrant swirl of fresh spinach, cucumber, broccoli, and carrot — with a touch of calcium carbonate and nutrient-rich Limnospira — our Spinach Snail Wraps are the ultimate slow-snack for your aquatic friends. Carefully crafted into soft, bite-sized spirals, they support shell health, digestion, and enrichment, all while keeping your tank pristine.<br><br>
+    <!-- Accordion -->
+    <div class="accordion">
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">Description</div>
+        <div class="accordion-content">
+Made from a vibrant swirl of fresh spinach, cucumber, broccoli, and carrot — with a touch of calcium carbonate and nutrient-rich Limnospira — our Spinach Snail Wraps are the ultimate slow-snack for your aquatic friends. Carefully crafted into soft, bite-sized spirals, they support shell health, digestion, and enrichment, all while keeping your tank pristine.<br><br>
 
 ✅ 100% vegetarian<br>
 ✅ Snail-safe & aquarium-friendly<br>
 ✅ No added preservatives<br><br>
 
-Let your snails savour every bite — because healthy snacking never looked so green!
-    </div>
-  </div>
+Let your snails savor every bite — because healthy snacking never looked so green!
+        </div>
+      </div>
 
-  <div class="accordion-section">
-    <div class="accordion-header" onclick="toggleAccordion(this)">Ingredients</div>
-    <div class="accordion-content">
-      <em>Ingredients are listed in order of proportions</em><br><br>
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">Ingredients</div>
+        <div class="accordion-content">
+          <em>Ingredients are listed in order of proportions</em><br><br>
 
 Spinach<br>
 
@@ -98,12 +114,12 @@ Carrot<br>
 Calcium Carbonate<br>
 
 Limnospira
-    </div>
-  </div>
+        </div>
+      </div>
 
-  <div class="accordion-section">
-    <div class="accordion-header" onclick="toggleAccordion(this)">Directions for Use</div>
-    <div class="accordion-content">
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">Directions for Use</div>
+        <div class="accordion-content">
       Get a small, shallow container and fill it with some water from the aquarium<br>
 
 Gently push on the plastic of the blister pack to push the spinach wrap out<br>
@@ -116,219 +132,207 @@ Gently place it in the tank and pour the water in with it<br>
 
 Let your snails enjoy their brand new snack!<br><br>
 
-One Spinach Wrap should last 2 average-sized mystery snails at least 2 days
-    </div>
-  </div>
+One Spinach Wrap should last 2 average-sized mystery snails at least 2.5 days
+        </div>
+      </div>
 
-  <div class="accordion-section">
-    <div class="accordion-header" onclick="toggleAccordion(this)">Storage Instructions</div>
-    <div class="accordion-content">
+      <div class="accordion-section">
+        <div class="accordion-header" onclick="toggleAccordion(this)">Storage Instructions</div>
+        <div class="accordion-content">
       Store in a cool, dry place.<br>
 Freeze after opening for maximum freshness.<br>
 Use within 6 months of opening.<br>
+        </div>
+      </div>
+      <div class="accordion">
+        <div class="accordion-section">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            Reviews
+          </div>
+          <div class="accordion-content">
+            <h2>Leave a Review</h2>
+              <form id="review-form">
+                <label for="name">Name:</label>
+                <input id="name" required />
+
+                <label for="rating">Rating:</label>
+                <select id="rating" required>
+                  <option value="5">★★★★★</option>
+                  <option value="4">★★★★☆</option>
+                  <option value="3">★★★☆☆</option>
+                  <option value="2">★★☆☆☆</option>
+                  <option value="1">★☆☆☆☆</option>
+                </select>
+
+                <label for="text">Review:</label>
+                <textarea id="text" required></textarea>
+
+                <button type="submit">Submit Review</button>
+              </form>
+
+            <h2>Reviews</h2>
+            <div id="reviewsContainer"></div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <!-- Reviews -->
-  <div class="accordion-section">
-    <div class="accordion-header" onclick="toggleAccordion(this)">Reviews</div>
-    <div class="accordion-content">
-      <h2>Leave a Review</h2>
-      <form id="review-form">
-        <label>Name:</label>
-        <input id="name" required>
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-left">
+        <p>The Friendly Snail</p>
+      </div>
+      <div class="footer-right">
+        <p>
+          Email:
+          <a href="mailto:business.gabelawrence@gmail.com"
+            >business.gabelawrence@gmail.com</a
+          >
+        </p>
+        <p>Phone: <a href="tel:+61493474198">0493 474 198</a></p>
+      </div>
+    </footer>
 
-        <label>Rating:</label>
-        <select id="rating" required>
-          <option value="5">★★★★★</option>
-          <option value="4">★★★★☆</option>
-          <option value="3">★★★☆☆</option>
-          <option value="2">★★☆☆☆</option>
-          <option value="1">★☆☆☆☆</option>
-        </select>
-
-        <label>Review:</label>
-        <textarea id="text" required></textarea>
-
-        <button type="submit">Submit Review</button>
-      </form>
-
-      <h2>Reviews</h2>
-      <div id="reviewsContainer"></div>
-    </div>
-  </div>
-</div>
-
-<!-- Footer -->
-<footer class="site-footer">
-  <div class="footer-left">
-    <p>The Friendly Snail</p>
-  </div>
-  <div class="footer-right">
-    <p>Email: <a href="mailto:business.gabelawrence@gmail.com">business.gabelawrence@gmail.com</a></p>
-    <p>Phone: <a href="tel:+61493474198">0493 474 198</a></p>
-  </div>
-</footer>
-
-<!-- Scripts -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  // Firebase Config
-  const firebaseConfig = {
-    apiKey: "AIzaSyA02yBiXXwWxbLcn8JQMTy6G49LYspn0wI",
-    authDomain: "spinach-wraps.firebaseapp.com",
-    databaseURL: "https://spinach-wraps-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "spinach-wraps",
-    storageBucket: "spinach-wraps.firebasestorage.app",
-    messagingSenderId: "530133376285",
-    appId: "1:530133376285:web:c06806a1fe851b2dea15f4",
-    measurementId: "G-8PG3JYELS4"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-
-  const reviewForm = document.getElementById("review-form");
-  const nameInput = document.getElementById("name");
-  const ratingInput = document.getElementById("rating");
-  const textInput = document.getElementById("text");
-  const reviewsContainer = document.getElementById("reviewsContainer");
-  const productId = "snail-burger";
-
-  // Only add event listener if form exists
-  if (reviewForm && nameInput && ratingInput && textInput) {
-    reviewForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const name = nameInput.value.trim();
-      const rating = parseInt(ratingInput.value);
-      const text = textInput.value.trim();
-
-      if (!name || !text || isNaN(rating)) {
-        alert("Please fill out all fields with a valid rating.");
-        return;
+    <!-- JS Scripts -->
+    <script>
+      function changeImage(img) {
+        document.getElementById("mainImage").src = img.src;
       }
 
-      const newReview = {
-        name,
-        rating,
-        text,
-        timestamp: new Date().toISOString()
-      };
-
-      db.ref(`reviews/${productId}`).push(newReview).then(() => {
-        alert("Review submitted!");
-        reviewForm.reset();
-      }).catch(err => {
-        alert("Submission failed: " + err.message);
-        console.error("Error submitting review:", err);
-      });
-    });
-
-    // Display reviews
-    db.ref(`reviews/${productId}`).on("value", snapshot => {
-      const data = snapshot.val();
-      reviewsContainer.innerHTML = "";
-
-      if (!data) {
-        reviewsContainer.innerHTML = "<p>No reviews yet.</p>";
-        return;
+      function toggleAccordion(header) {
+        const section = header.parentElement;
+        section.classList.toggle("open");
       }
 
-      const reviews = Object.values(data).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-      reviews.forEach(review => {
-        const div = document.createElement("div");
-        div.className = "review";
-        const stars = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
-        div.innerHTML = `
-          <div><strong>${review.name}</strong> <span class="stars">${stars}</span></div>
-          <div>${review.text}</div>
-        `;
-        reviewsContainer.appendChild(div);
-      });
-    });
+      function updatePrice() {
+        const select = document.getElementById("size-snail-burger");
+        const price = parseFloat(select.value);
+        document.getElementById("price").innerText = `$${price.toFixed(2)}`;
+      }
+
+function addToCart(id, name) {
+  const quantity = parseInt(document.getElementById("quantity").value);
+  const sizeSelect = document.getElementById("size-snail-burger");
+  const sizeLabel = sizeSelect.options[sizeSelect.selectedIndex].text;
+  const sizePrice = parseFloat(sizeSelect.value);
+  const image = document.getElementById("mainImage").src;
+
+  const cartItem = {
+    id: id,
+    name: name,
+    quantity: quantity,
+    price: sizePrice,
+    variables: sizeLabel,
+    image: image
+  };
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  // If item with same ID and variables exists, increase quantity
+  const existingIndex = cart.findIndex(
+    (item) => item.id === id && item.variables === sizeLabel
+  );
+
+  if (existingIndex > -1) {
+    cart[existingIndex].quantity += quantity;
+  } else {
+    cart.push(cartItem);
   }
 
-  // Product image preview
-  window.changeImage = function (img) {
-    const mainImage = document.getElementById("mainImage");
-    if (mainImage) {
-      mainImage.src = img.src;
-    }
-  };
+  localStorage.setItem("cart", JSON.stringify(cart));
 
-  // Update price
-  window.updatePrice = function () {
-    const priceInput = document.getElementById("size");
-    const priceDisplay = document.getElementById("price");
-    if (priceInput && priceDisplay) {
-      const price = parseFloat(priceInput.value);
-      priceDisplay.textContent = `$${price.toFixed(2)}`;
-    }
-  };
-
-  // Add to cart (stub)
-  function addToCart(id, nameBase, basePrice) {
-    const sizeSelect = document.getElementById(`size-${id}`);
-    const size = sizeSelect ? sizeSelect.value : 'Default';
-    const adjustedPrice = parseFloat(sizeSelect.selectedOptions[0].dataset.price || basePrice);
-
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    const existingItem = cart.find(item => item.id === id && item.size === size);
-    if (existingItem) {
-      existingItem.quantity += 1;
-    } else {
-      cart.push({
-        id,
-        name: `${nameBase} (${size})`,
-        baseName: nameBase,
-        size,
-        price: adjustedPrice,
-        quantity: 1
-      });
-    }
-
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartBadge(); // optional if you're using the cart badge system
-  }
-
-  // Accordion toggle
-  window.toggleAccordion = function (header) {
-    const section = header.parentElement;
-    if (section) section.classList.toggle("open");
-  };
+  document.addEventListener("DOMContentLoaded", function () {
+  updateCartBadge();
+  // Existing code…
 });
-</script>
 
-<script>
-  // Assume your cart is saved in localStorage under "cart"
-  function updateCartBadge() {
-    const badge = document.getElementById("cart-count-badge");
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+}
 
-    if (itemCount > 0) {
-      badge.textContent = itemCount;
-      badge.style.display = "inline-block";
-    } else {
-      badge.style.display = "none";
-    }
-  }
 
-  // Call it on page load
-  document.addEventListener("DOMContentLoaded", updateCartBadge);
-</script>
+function updateCartBadge() {
+  const badge = document.getElementById("cart-count-badge");
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  badge.textContent = totalItems;
+}
 
-</body>
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const firebaseConfig = {
+          apiKey: "AIzaSyA02yBiXXwWxbLcn8JQMTy6G49LYspn0wI",
+          authDomain: "spinach-wraps.firebaseapp.com",
+          databaseURL: "https://spinach-wraps-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "spinach-wraps",
+          storageBucket: "spinach-wraps.firebasestorage.app",
+          messagingSenderId: "530133376285",
+          appId: "1:530133376285:web:c06806a1fe851b2dea15f4",
+          measurementId: "G-8PG3JYELS4"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        const reviewForm = document.getElementById("review-form");
+        const nameInput = document.getElementById("name");
+        const ratingInput = document.getElementById("rating");
+        const textInput = document.getElementById("text");
+        const reviewsContainer = document.getElementById("reviewsContainer");
+        const productId = "snail-burger";
+
+        if (reviewForm) {
+          reviewForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const name = nameInput.value.trim();
+            const rating = parseInt(ratingInput.value);
+            const text = textInput.value.trim();
+            if (!name || !text || isNaN(rating)) {
+              alert("Please fill out all fields with a valid rating.");
+              return;
+            }
+
+            const newReview = {
+              name,
+              rating,
+              text,
+              timestamp: new Date().toISOString(),
+            };
+
+            db.ref(`reviews/${productId}`)
+              .push(newReview)
+              .then(() => {
+                alert("Review submitted!");
+                reviewForm.reset();
+              })
+              .catch((err) => {
+                alert("Submission failed: " + err.message);
+                console.error("Error submitting review:", err);
+              });
+          });
+
+          db.ref(`reviews/${productId}`).on("value", (snapshot) => {
+            const data = snapshot.val();
+            reviewsContainer.innerHTML = "";
+            if (!data) {
+              reviewsContainer.innerHTML = "<p>No reviews yet.</p>";
+              return;
+            }
+
+            const reviews = Object.values(data).sort(
+              (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+            );
+            reviews.forEach((review) => {
+              const div = document.createElement("div");
+              div.className = "review";
+              const stars =
+                "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
+              div.innerHTML = `
+                <div><strong>${review.name}</strong> <span class="stars">${stars}</span></div>
+                <div>${review.text}</div>
+              `;
+              reviewsContainer.appendChild(div);
+            });
+          });
+        }
+      });
+    </script>
+  </body>
 </html>
-
-    apiKey: "AIzaSyA02yBiXXwWxbLcn8JQMTy6G49LYspn0wI",
-    authDomain: "spinach-wraps.firebaseapp.com",
-    databaseURL: "https://spinach-wraps-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "spinach-wraps",
-    storageBucket: "spinach-wraps.firebasestorage.app",
-    messagingSenderId: "530133376285",
-    appId: "1:530133376285:web:c06806a1fe851b2dea15f4",
-    measurementId: "G-8PG3JYELS4"
