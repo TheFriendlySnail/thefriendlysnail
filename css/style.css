@@ -583,26 +583,37 @@ body {
 
 .accordion-content {
   width: 100%;
-  display: none;
-  padding: 10px;
-  border-top: 1px solid #ccc;
-  flex-direction: column; /* <-- prevents inline flex behavior */
+  display: flex;
+  justify-content: center; /* center the form */
+  padding: 1rem;
+  box-sizing: border-box;
 }
+
+.accordion-content form {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-sizing: border-box;
+}
+
+.accordion-content input,
+.accordion-content select,
+.accordion-content textarea,
+.accordion-content button {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
 
 .accordion-section.open .accordion-content {
   display: block;
 }
-
-/* Ensure the form inside accordion is vertical */
-.accordion-content form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;
-  max-width: 900px; /* prevent stretching */
-  margin: 0 auto;    /* center the form */
-}
-
 
 .review-form textarea {
   max-width: 900px;
