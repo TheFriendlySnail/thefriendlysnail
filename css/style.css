@@ -623,7 +623,7 @@ body {
 .stars {
   display: inline-block;
   font-size: 1.5rem;
-  color: yellow;
+  color: gold;
   cursor: pointer;
   user-select: none;
   margin-bottom: 10px;
