@@ -599,17 +599,8 @@ body {
   flex-direction: column;
   gap: 15px;
   width: 100%;
-  max-width: 600px; /* prevent stretching */
+  max-width: 900px; /* prevent stretching */
   margin: 0 auto;    /* center the form */
-}
-
-.accordion-content input,
-.accordion-content select,
-.accordion-content textarea,
-.accordion-content button[type="submit"] {
-  width: 100%;
-  max-width: 100%; /* don't overflow */
-  box-sizing: border-box; /* include padding/border in width */
 }
 
 
