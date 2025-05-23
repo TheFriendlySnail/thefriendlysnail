@@ -567,58 +567,47 @@ body {
 }
 
 .accordion-section {
-  width: 100%;
+  width: 100%
   background: white;
   border-radius: 5px;
   margin-bottom: 1rem;
   overflow: hidden;
-  display: flex;
-  flex-direction: row; /* Force vertical stacking */
+}
+
+.accordion-header {
+  padding: 1rem;
+  background: #eee;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .accordion-content {
   width: 100%;
-  padding: 1rem;
-  box-sizing: border-box;
-}
-
-.accordion-content h2 {
-  text-align: center;
-}
-
-.accordion-content form {
-  max-width: 700px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-}
-
-.accordion-content input,
-.accordion-content select,
-.accordion-content textarea,
-.accordion-content button {
-  width: 100%;
+  display: none;
   padding: 10px;
-  font-size: 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  flex-direction: column; /* <-- prevents inline flex behavior */
 }
-
-.reviews {
-  max-width: 700px;
-  margin: 2rem auto 0;
-}
-
 
 .accordion-section.open .accordion-content {
   display: block;
+}
+
+/* Ensure the form inside accordion is vertical */
+.accordion-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .review-form textarea {
   max-width: 900px;
   width: 100%;
   height: 100px;
+}
+
+.reviews {
+  margin-top: 1rem;
 }
 
 .review {
