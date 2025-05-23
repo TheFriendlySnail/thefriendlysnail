@@ -582,8 +582,25 @@ body {
 }
 
 .accordion-content {
+  width: 100%;
   display: none;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-sizing: border-box;
 }
+
+.accordion-content input,
+.accordion-content select,
+.accordion-content textarea,
+.accordion-content button {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
 
 .accordion-section.open .accordion-content {
   display: block;
@@ -617,6 +634,11 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+#review-form {
+  max-width: 600px;
+  width: 100%;
 }
 
 .sort-reviews {
