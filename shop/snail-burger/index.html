@@ -200,52 +200,50 @@ Use within 6 months of opening.<br>
         document.getElementById("price").innerText = $${price.toFixed(2)};
       }
 
-function addToCart(id, name) {
-  const quantity = parseInt(document.getElementById("quantity").value);
-  const sizeSelect = document.getElementById("size-snail-burger");
-  const sizeLabel = sizeSelect.options[sizeSelect.selectedIndex].text;
-  const sizePrice = parseFloat(sizeSelect.value);
-  const image = document.getElementById("mainImage").src;
+  function addToCart(id, nameBase, basePrice) {
+    const sizeSelect = document.getElementById(`size-${id}`);
+    let size = 'Default';
+    let adjustedPrice = basePrice;
 
-  const cartItem = {
-    id: id,
-    name: name,
-    quantity: quantity,
-    price: sizePrice,
-    variables: sizeLabel,
-    image: image
-  };
+    if (sizeSelect && sizeSelect.selectedOptions.length > 0) {
+      size = sizeSelect.value;
+      adjustedPrice = parseFloat(sizeSelect.selectedOptions[0].dataset.price || basePrice);
+    }
 
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-  // If item with same ID and variables exists, increase quantity
-  const existingIndex = cart.findIndex(
-    (item) => item.id === id && item.variables === sizeLabel
-  );
+    const existingItem = cart.find(item => item.id === id && item.size === size);
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({
+        id,
+        name: `${nameBase} (${size})`,
+        baseName: nameBase,
+        size,
+        price: adjustedPrice,
+        quantity: 1
+      });
+    }
 
-  if (existingIndex > -1) {
-    cart[existingIndex].quantity += quantity;
-  } else {
-    cart.push(cartItem);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartBadge();
   }
 
-  localStorage.setItem("cart", JSON.stringify(cart));
+  function updateCartBadge() {
+    const badge = document.getElementById("cart-count-badge");
+    if (!badge) return;
 
-  document.addEventListener("DOMContentLoaded", function () {
-  updateCartBadge();
-  // Existing code…
-});
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-}
-
-
-function updateCartBadge() {
-  const badge = document.getElementById("cart-count-badge");
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  badge.textContent = totalItems;
-}
-
+    if (itemCount > 0) {
+      badge.textContent = itemCount;
+      badge.style.display = "inline-block";
+    } else {
+      badge.style.display = "none";
+    }
+  }
 
       document.addEventListener("DOMContentLoaded", function () {
         const firebaseConfig = {
