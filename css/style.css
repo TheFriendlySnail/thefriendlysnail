@@ -1,7 +1,6 @@
 /* Reset/Global */
 body {
   margin: 0;
-  padding: 0;
   font-family: 'Segoe UI', sans-serif;
   background-color: #f8f8f8;
   color: #333;
@@ -35,10 +34,6 @@ body {
   gap: 20px;
   margin: 0;
   padding: 0;
-}
-
-.nav-links li {
-  position: relative;
 }
 
 .nav-links li a {
@@ -93,7 +88,7 @@ body {
   position: relative;
   width: 100%;
   height: 80vh;
-  background-image: url('/assets/banner.jpg');
+  background-image: url('/assets/banner.jpg'); /* adjust if it's .png */
   background-size: cover;
   background-position: center;
   display: flex;
@@ -107,7 +102,7 @@ body {
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5); /* black tint */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -237,10 +232,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 40px;
+  padding: 20px 40px;
   background-color: #222;
   color: #fff;
   flex-wrap: wrap;
+  padding: 1rem;
 }
 
 .site-footer a {
@@ -430,7 +426,7 @@ button[type="submit"]:hover {
 .product-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: center; /* centers items horizontally */
   gap: 20px;
   padding: 20px;
 }
@@ -457,7 +453,7 @@ button[type="submit"]:hover {
   margin-bottom: 1rem;
 }
 
-.product-card h2 a {
+.product-card h2a {
   text-decoration: none;
   color: #000;
 }
@@ -468,9 +464,11 @@ button[type="submit"]:hover {
   color: #444;
 }
 
+}
+
 /* Add to Cart Button */
 button.add-to-cart {
-  all: unset;
+  all: unset; /* optional: clears browser defaults */
   display: inline-block;
   padding: 10px 20px;
   background-color: #333;
@@ -484,6 +482,13 @@ button.add-to-cart {
 
 button.add-to-cart:hover {
   background-color: #555;
+}
+
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f8f8f8;
 }
 
 .container {
@@ -568,7 +573,7 @@ button.add-to-cart:hover {
   margin-bottom: 1rem;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Force vertical stacking */
 }
 
 .accordion-content {
@@ -604,6 +609,7 @@ button.add-to-cart:hover {
   max-width: 700px;
   margin: 2rem auto 0;
 }
+
 
 .accordion-section.open .accordion-content {
   display: block;
@@ -645,7 +651,7 @@ main {
   flex: 1;
 }
 
-.cart-icon-container {
+.cart-container {
   position: relative;
   display: inline-block;
 }
@@ -657,22 +663,18 @@ main {
 
 .cart-badge {
   position: absolute;
-  top: -8px;
-  right: -8px;
+  top: -6px;
+  right: -6px;
   background-color: red;
   color: white;
-  font-size: 0.7rem;
+  font-size: 12px;
   font-weight: bold;
+  padding: 2px 6px;
   border-radius: 50%;
-  padding: 6px 6px;
-  width: 8px;
-  height: 8px;
-  text-align: center;
-  line-height: 1;
-  display: inline-block;
+  display: none; /* Hidden by default, shown via JS */
 }
 
-.cart-page-container {
+.cart-container {
   max-width: 900px;
   margin: 40px auto;
   padding: 0 20px;
