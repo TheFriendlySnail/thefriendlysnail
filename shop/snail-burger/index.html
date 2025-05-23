@@ -201,7 +201,9 @@ Use within 6 months of opening.<br>
       }
 
   function addToCart(id, nameBase, basePrice) {
-    const sizeSelect = document.getElementById(`size-${id}`);
+    const sizeSelect = document.getElementById("size-snail-burger");
+    const size = sizeSelect.options[sizeSelect.selectedIndex].text;
+    const adjustedPrice = parseFloat(sizeSelect.value);
     let size = 'Default';
     let adjustedPrice = basePrice;
 
