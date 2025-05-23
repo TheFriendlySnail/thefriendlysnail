@@ -581,7 +581,7 @@ body {
   font-weight: bold;
 }
 
-..accordion-content {
+.accordion-content {
   width: 100%;
   display: none;
   padding: 10px;
