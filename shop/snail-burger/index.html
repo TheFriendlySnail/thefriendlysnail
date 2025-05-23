@@ -168,12 +168,12 @@ Use within 6 months of opening.<br>
               <button type="submit">Submit Review</button>
             </form>
 
-          <h2>Reviews</h2>
-          <div id="reviewsContainer"></div>
+            <h2>Reviews</h2>
+            <div id="reviewsContainer"></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
     <!-- Footer -->
     <footer class="site-footer">
@@ -195,11 +195,6 @@ Use within 6 months of opening.<br>
     <script>
       function changeImage(img) {
         document.getElementById("mainImage").src = img.src;
-      }
-
-      function toggleAccordion(header) {
-        const section = header.parentElement;
-        section.classList.toggle("open");
       }
 
       function updatePrice() {
@@ -332,5 +327,13 @@ function updateCartBadge() {
         }
       });
     </script>
+    <script>
+    function toggleAccordion(header) {
+      console.log("Toggling accordion");
+      const section = header.parentElement;
+      section.classList.toggle("open");
+    }
+    </script>
+
   </body>
 </html>
