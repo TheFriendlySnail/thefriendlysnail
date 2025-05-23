@@ -582,11 +582,7 @@ body {
 }
 
 .accordion-content {
-  width: 100%;
   display: none;
-  padding: 10px;
-  border-top: 1px solid #ccc;
-  flex-direction: column; /* <-- prevents inline flex behavior */
 }
 
 .accordion-section.open .accordion-content {
