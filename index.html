@@ -3,18 +3,763 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Friendly Snail</title>
+  <title>The Friendly Snail - Premium Aquatic Pet Nutrition</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* Reset/Global */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f8f8;
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Navbar Styles - Matching other pages */
+    .navbar {
+      background-color: rgba(34, 34, 34, 0.95);
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .navbar.scrolled {
+      background-color: #222;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      height: 50px;
+      width: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 20px;
+    }
+
+    .nav-links li a:hover {
+      color: #ffcc00;
+      background-color: rgba(255, 204, 0, 0.1);
+    }
+
+    /* Cart badge positioning */
+    .nav-links li {
+      position: relative;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: #ff4757;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 50%;
+      display: none;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* Hero Banner Section */
+    .hero-banner {
+      height: 100vh;
+      background: linear-gradient(135deg, #2c5530 0%, #1e3a21 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="white" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+
+    .hero-content {
+      text-align: center;
+      color: white;
+      z-index: 2;
+      position: relative;
+      max-width: 800px;
+      padding: 0 20px;
+    }
+
+    .hero-notice {
+      background: rgba(255, 75, 87, 0.9);
+      color: white;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      animation: bounce 2s infinite;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    .hero-title {
+      font-size: 4rem;
+      margin: 30px 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      animation: fadeInUp 1s ease 0.5s both;
+    }
+
+    .hero-subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 40px;
+      opacity: 0.9;
+      animation: fadeInUp 1s ease 0.8s both;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: linear-gradient(135deg, #ffcc00 0%, #ff9500 100%);
+      color: #333;
+      padding: 18px 40px;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      animation: fadeInUp 1s ease 1.1s both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .hero-cta:hover::before {
+      left: 100%;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(255, 204, 0, 0.4);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Floating Elements */
+    .floating-element {
+      position: absolute;
+      opacity: 0.1;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-element:nth-child(1) {
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .floating-element:nth-child(2) {
+      top: 60%;
+      right: 15%;
+      animation-delay: 2s;
+    }
+
+    .floating-element:nth-child(3) {
+      bottom: 30%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* Featured Products Section */
+    .featured-section {
+      padding: 100px 20px;
+      background: white;
+    }
+
+    .featured-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .featured-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .featured-header h2 {
+      font-size: 3.5rem;
+      color: #2c5530;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .featured-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(135deg, #2c5530 0%, #1e3a21 100%);
+      border-radius: 2px;
+    }
+
+    .featured-header p {
+      font-size: 1.3rem;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      margin-top: 60px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-image {
+      transform: scale(1.05);
+    }
+
+    .product-info {
+      padding: 30px;
+    }
+
+    .product-name {
+      font-size: 1.8rem;
+      color: #2c5530;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .product-price {
+      font-size: 1.4rem;
+      color: #ff6b35;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .product-description {
+      color: #666;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    .shop-now-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #2c5530 0%, #1e3a21 100%);
+      color: white;
+      padding: 12px 30px;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shop-now-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .shop-now-btn:hover::before {
+      left: 100%;
+    }
+
+    .shop-now-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(44, 85, 48, 0.3);
+    }
+
+    /* Features Section */
+    .features-section {
+      padding: 100px 20px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    }
+
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .features-header h2 {
+      font-size: 3rem;
+      color: #2c5530;
+      margin-bottom: 60px;
+      position: relative;
+    }
+
+    .features-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(135deg, #2c5530 0%, #1e3a21 100%);
+      border-radius: 2px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+    }
+
+    .feature-item {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(135deg, #2c5530 0%, #1e3a21 100%);
+    }
+
+    .feature-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      color: #2c5530;
+      margin-bottom: 20px;
+    }
+
+    .feature-item h3 {
+      font-size: 1.5rem;
+      color: #2c5530;
+      margin-bottom: 15px;
+    }
+
+    .feature-item p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* Who We Are Section */
+    .who-we-are-section {
+      padding: 100px 20px;
+      background: white;
+    }
+
+    .who-we-are-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .who-we-are-image {
+      text-align: center;
+    }
+
+    .who-we-are-logo {
+      max-width: 300px;
+      height: auto;
+      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.1));
+      transition: transform 0.3s ease;
+    }
+
+    .who-we-are-logo:hover {
+      transform: scale(1.05) rotate(2deg);
+    }
+
+    .who-we-are-content h2 {
+      font-size: 3rem;
+      color: #2c5530;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .who-we-are-content h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(135deg, #2c5530 0%, #1e3a21 100%);
+      border-radius: 2px;
+    }
+
+    .who-we-are-content p {
+      font-size: 1.2rem;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+
+    .learn-more-btn {
+      display: inline-block;
+      background: transparent;
+      color: #2c5530;
+      padding: 15px 35px;
+      text-decoration: none;
+      border: 2px solid #2c5530;
+      border-radius: 25px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .learn-more-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: #2c5530;
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+
+    .learn-more-btn:hover::before {
+      left: 0;
+    }
+
+    .learn-more-btn:hover {
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(44, 85, 48, 0.3);
+    }
+
+    /* Testimonials Section */
+    .testimonials-section {
+      padding: 100px 20px;
+      background: linear-gradient(135deg, #2c5530 0%, #1e3a21 100%);
+      color: white;
+    }
+
+    .testimonials-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .testimonials-header h2 {
+      font-size: 3rem;
+      margin-bottom: 60px;
+      position: relative;
+    }
+
+    .testimonials-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 2px;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+    }
+
+    .testimonial-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .testimonial-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .testimonial-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      font-weight: bold;
+      color: #ffcc00;
+    }
+
+    .stars {
+      color: #ffc107;
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+
+    /* Footer Styles - Matching other pages */
+    .site-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 40px;
+      background-color: #222;
+      color: #fff;
+      flex-wrap: wrap;
+    }
+
+    .site-footer a {
+      color: #1abc9c;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .site-footer a:hover {
+      color: #ffcc00;
+      text-decoration: underline;
+    }
+
+    .footer-left,
+    .footer-right {
+      flex: 1 1 300px;
+    }
+
+    .footer-right p {
+      margin: 5px 0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 968px) {
+      .hero-title {
+        font-size: 3rem;
+      }
+
+      .who-we-are-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+
+      .hero-notice {
+        font-size: 1rem;
+        padding: 12px 25px;
+      }
+
+      .featured-header h2 {
+        font-size: 2.5rem;
+      }
+
+      .features-header h2 {
+        font-size: 2.5rem;
+      }
+
+      .who-we-are-content h2 {
+        font-size: 2.5rem;
+      }
+
+      .testimonials-header h2 {
+        font-size: 2.5rem;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .site-footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
+
+      .nav-links {
+        gap: 15px;
+      }
+
+      .nav-links li a {
+        font-size: 14px;
+        padding: 6px 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-banner {
+        height: 80vh;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+
+      .featured-section,
+      .features-section,
+      .who-we-are-section,
+      .testimonials-section {
+        padding: 60px 15px;
+      }
+
+      .product-info {
+        padding: 25px 20px;
+      }
+
+      .feature-item {
+        padding: 30px 20px;
+      }
+
+      .testimonial-item {
+        padding: 30px 20px;
+      }
+    }
+  </style>
 </head>
 <body>
 
   <!-- Navigation Bar -->
-  <nav class="navbar">
+  <nav class="navbar" id="navbar">
     <div class="nav-container">
       <a href="/" class="logo-link">
-        <img src="../assets/logo.png" alt="The Friendly Snail Logo" class="logo">
+        <img src="/assets/logo.png" alt="The Friendly Snail Logo" class="logo">
       </a>
       <ul class="nav-links">
         <li><a href="/about/">About</a></li>
@@ -30,47 +775,122 @@
     </div>
   </nav>
 
-  <!-- Banner Section -->
-  <header class="banner">
-    <div class="overlay">
-      <h1 style="color:red;">!NOT IN USE YET - DO NOT ORDER!</h1>
+  <!-- Hero Banner Section -->
+  <header class="hero-banner">
+    <div class="floating-element">🐌</div>
+    <div class="floating-element">🥬</div>
+    <div class="floating-element">🥕</div>
+    
+    <div class="hero-content">
+      <div class="hero-notice">
+        !NOT IN USE YET - DO NOT ORDER!
+      </div>
+      <h1 class="hero-title">The Friendly Snail</h1>
+      <p class="hero-subtitle">Premium nutrition for your slowest aquatic friends</p>
+      <a href="/shop/" class="hero-cta">Explore Products</a>
     </div>
   </header>
 
-  <!-- Featured Products -->
-  <section class="featured-products">
-    <h2>Featured Products</h2>
+  <!-- Featured Products Section -->
+  <section class="featured-section">
+    <div class="featured-container">
+      <div class="featured-header">
+        <h2>Featured Products</h2>
+        <p>Discover our premium selection of nutritious veggie snacks, carefully crafted for happy and healthy aquatic pets</p>
+      </div>
 
-    <div class="product">
-      <img src="/assets/snail-burger.jpg" alt="Snail Burger" class="product-image">
-      <h3 class="product-name">Snail Burger</h3>
-      <p class="product-price">From $9.99</p>
-      <a href="/shop/snail-burger" class="add-to-cart">Shop Now</a>
+      <div class="products-grid">
+        <div class="product-card">
+          <img src="/assets/snail-burger.jpg" alt="Snail Burger" class="product-image">
+          <div class="product-info">
+            <h3 class="product-name">Snail Burger</h3>
+            <p class="product-price">From $9.99</p>
+            <p class="product-description">Nutritious blend of cucumber, broccoli, spinach, and carrot shaped into easy-to-eat patties.</p>
+            <a href="/shop/snail-burger/" class="shop-now-btn">Shop Now</a>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <img src="/assets/weighted-skewer.jpg" alt="Weighted Skewer" class="product-image">
+          <div class="product-info">
+            <h3 class="product-name">Weighted Skewer</h3>
+            <p class="product-price">$0.49</p>
+            <p class="product-description">Perfect tool for feeding your snails - keeps food in place while your pets enjoy their meal.</p>
+            <a href="/shop/weighted-skewer/" class="shop-now-btn">Shop Now</a>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <img src="/assets/spinach.jpg" alt="Spinach Wrap" class="product-image">
+          <div class="product-info">
+            <h3 class="product-name">Spinach Wraps</h3>
+            <p class="product-price">From $11.99</p>
+            <p class="product-description">Fresh spinach wraps packed with essential nutrients - a gourmet treat for your aquatic friends.</p>
+            <a href="/shop/spinach-wraps/" class="shop-now-btn">Shop Now</a>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="product">
-      <img src="/assets/weighted-skewer.jpg" alt="Weighted Skewer" class="product-image">
-      <h3 class="product-name">Weighted Skewer</h3>
-      <p class="product-price">$0.49</p>
-      <a href="/shop/weighted-skewer" class="add-to-cart">Shop Now</a>
-    </div>
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="features-container">
+      <div class="features-header">
+        <h2>Why Choose The Friendly Snail?</h2>
+      </div>
 
-    <div class="product">
-      <img src="/assets/spinach.jpg" alt="Spinach Wrap" class="product-image">
-      <h3 class="product-name">Spinach Wraps</h3>
-      <p class="product-price">From $11.99</p>
-      <a href="/shop/spinach-wraps" class="add-to-cart">Shop Now</a>
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">🌱</div>
+          <h3>100% Natural</h3>
+          <p>All our products are made from fresh, natural vegetables with no artificial preservatives or additives.</p>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon">💚</div>
+          <h3>Aquarium Safe</h3>
+          <p>Carefully formulated to be safe for your aquarium environment while providing optimal nutrition.</p>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon">🐌</div>
+          <h3>Snail Approved</h3>
+          <p>Tested and loved by snails everywhere - watch your pets thrive with our premium nutrition.</p>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon">📦</div>
+          <h3>Fresh Delivery</h3>
+          <p>Products are freshly made and carefully packaged to ensure maximum freshness upon arrival.</p>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon">🔬</div>
+          <h3>Quality Tested</h3>
+          <p>Every batch is rigorously tested to ensure safety, nutrition, and quality for your beloved pets.</p>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon">♻️</div>
+          <h3>Eco-Friendly</h3>
+          <p>Sustainable packaging and environmentally conscious production methods for a better planet.</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Who We Are Section -->
-  <section class="who-we-are">
-    <div class="who-we-are-content">
-      <img src="/assets/logo.png" alt="The Friendly Snail Logo" class="who-we-are-logo">
-      <div class="who-we-are-text">
+  <section class="who-we-are-section">
+    <div class="who-we-are-container">
+      <div class="who-we-are-image">
+        <img src="/assets/logo.png" alt="The Friendly Snail Logo" class="who-we-are-logo">
+      </div>
+      <div class="who-we-are-content">
         <h2>Who We Are</h2>
-        <p>Welcome to The Friendly Snail, where we make nutritious veggie snacks like cucumber, broccoli, spinach, and carrot “snail burgers” — perfect for happy, healthy tank friends. Made with love for the slowest stars of your aquarium.</p>
-        <a href="/about/" class="learn-more-button">Learn More</a>
+        <p>Welcome to The Friendly Snail, where we make nutritious veggie snacks like cucumber, broccoli, spinach, and carrot "snail burgers" — perfect for happy, healthy tank friends. Made with love for the slowest stars of your aquarium.</p>
+        <p>Our passion for aquatic pets drives us to create the finest nutrition products, ensuring every meal is both delicious and beneficial for your underwater companions.</p>
+        <a href="/about/" class="learn-more-btn">Learn More About Us</a>
       </div>
     </div>
   </section>
@@ -88,17 +908,192 @@
 
   <!-- JavaScript -->
   <script>
-    // Update the cart badge with item count from localStorage
+    // Enhanced cart badge update with error handling
     function updateCartBadge() {
-      const badge = document.getElementById("cart-count-badge");
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      const itemCount = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+      try {
+        const badge = document.getElementById("cart-count-badge");
+        if (!badge) return;
 
-      badge.textContent = itemCount;
-      badge.style.display = itemCount > 0 ? "inline-block" : "none";
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const itemCount = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+
+        if (itemCount > 0) {
+          badge.textContent = itemCount;
+          badge.style.display = "inline-block";
+        } else {
+          badge.style.display = "none";
+        }
+      } catch (error) {
+        console.error('Error updating cart badge:', error);
+      }
     }
 
-    document.addEventListener("DOMContentLoaded", updateCartBadge);
+    // Navbar scroll effect
+    function handleNavbarScroll() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 100) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }
+
+    // Smooth scroll for internal links
+    function initSmoothScroll() {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    }
+
+    // Intersection Observer for scroll animations
+    function initScrollAnimations() {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+
+      // Observe elements for scroll animations
+      const animateElements = document.querySelectorAll(
+        '.product-card, .feature-item, .testimonial-item, .who-we-are-container > *'
+      );
+      
+      animateElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+      });
+    }
+
+    // Parallax effect for hero section
+    function initParallax() {
+      const hero = document.querySelector('.hero-banner');
+      const floatingElements = document.querySelectorAll('.floating-element');
+
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+        
+        if (hero && scrolled < hero.offsetHeight) {
+          hero.style.transform = `translateY(${rate}px)`;
+        }
+
+        // Animate floating elements
+        floatingElements.forEach((element, index) => {
+          const speed = 0.3 + (index * 0.1);
+          element.style.transform = `translateY(${scrolled * speed}px)`;
+        });
+      });
+    }
+
+    // Performance optimized scroll handler
+    let ticking = false;
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleNavbarScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    // Initialize everything on DOM load
+    document.addEventListener("DOMContentLoaded", function() {
+      updateCartBadge();
+      initSmoothScroll();
+      initScrollAnimations();
+      initParallax();
+
+      // Add scroll event listener
+      window.addEventListener('scroll', onScroll);
+
+      // Add loading animation completion
+      document.body.classList.add('loaded');
+
+      // Preload critical images
+      const criticalImages = [
+        '/assets/snail-burger.jpg',
+        '/assets/weighted-skewer.jpg',
+        '/assets/spinach.jpg',
+        '/assets/logo.png'
+      ];
+
+      criticalImages.forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
+    });
+
+    // Handle window resize for responsive adjustments
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        updateCartBadge();
+      }, 250);
+    });
+
+    // Add keyboard navigation support
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        // Close any open elements or reset focus
+        document.activeElement.blur();
+      }
+      
+      // Add arrow key navigation for product cards
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        const productCards = document.querySelectorAll('.product-card');
+        const currentIndex = Array.from(productCards).findIndex(card => 
+          card.contains(document.activeElement)
+        );
+        
+        if (currentIndex !== -1) {
+          e.preventDefault();
+          const nextIndex = e.key === 'ArrowRight' 
+            ? Math.min(currentIndex + 1, productCards.length - 1)
+            : Math.max(currentIndex - 1, 0);
+          
+          const shopButton = productCards[nextIndex].querySelector('.shop-now-btn');
+          if (shopButton) shopButton.focus();
+        }
+      }
+    });
+
+    // Add enhanced loading states for links
+    document.querySelectorAll('a[href^="/"]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        // Add loading state for internal navigation
+        if (!e.ctrlKey && !e.metaKey) {
+          this.style.opacity = '0.7';
+          this.style.pointerEvents = 'none';
+          
+          // Reset after a short delay in case navigation fails
+          setTimeout(() => {
+            this.style.opacity = '';
+            this.style.pointerEvents = '';
+          }, 3000);
+        }
+      });
+    });
   </script>
 
 </body>
