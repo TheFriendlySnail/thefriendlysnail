@@ -79,12 +79,15 @@ body {
 
 /* Enhanced Header Banner */
 .banner {
-  background: url('/assets/banner.jpg');
-  color: white;
-  text-align: center;
-  padding: 80px 20px;
   position: relative;
-  overflow: hidden;
+  width: 100%;
+  height: 80vh;
+  background-image: url('/assets/banner.jpg'); /* adjust if it's .png */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .banner::before {
