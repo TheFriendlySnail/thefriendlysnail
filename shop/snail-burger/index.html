@@ -3,23 +3,447 @@
   <head>
     <meta charset="UTF-8" />
     <title>Snail Burger - The Friendly Snail</title>
-    <link rel="stylesheet" href="../../css/style.css" />
     <link rel="icon" href="/favicon.png" type="image/png" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <style>
+      /* Reset/Global */
+      body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f8f8f8;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      /* Navbar Styles */
+      .navbar {
+        background-color: #222;
+        padding: 10px 20px;
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .logo {
+        height: 50px;
+        width: auto;
+      }
+
+      .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+        margin: 0;
+        padding: 0;
+        align-items: center;
+      }
+
+      .nav-links li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 16px;
+        transition: color 0.2s ease;
+      }
+
+      .nav-links li a:hover {
+        color: #ffcc00;
+      }
+
+      /* Cart badge positioning */
+      .nav-links li {
+        position: relative;
+      }
+
+      .cart-badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: red;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 50%;
+        display: none;
+      }
+
+      /* Main container for product */
+      .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
+
+      /* Enhanced Product Images Section */
+      .product-images {
+        flex: 1;
+        max-width: 500px;
+      }
+
+      .main-image {
+        width: 100%;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .main-image:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Enhanced thumbnail navigation */
+      .thumbnail-images {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+        justify-content: center;
+      }
+
+      .thumbnail {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border: 3px solid transparent;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        opacity: 0.7;
+      }
+
+      .thumbnail:hover {
+        opacity: 1;
+        transform: translateY(-2px);
+        border-color: #666;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .thumbnail.active {
+        border-color: #333;
+        opacity: 1;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Product details */
+      .details {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .details h1 {
+        margin-top: 0;
+        color: #333;
+        font-size: 2.2rem;
+      }
+
+      .price {
+        font-size: 1.8rem;
+        margin: 0.5rem 0;
+        color: #2c5530;
+        font-weight: bold;
+      }
+
+      .details label {
+        display: block;
+        margin: 15px 0 5px 0;
+        font-weight: bold;
+        color: #555;
+      }
+
+      .details select,
+      .details input {
+        display: block;
+        margin: 5px 0 15px 0;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+      }
+
+      .details select:focus,
+      .details input:focus {
+        outline: none;
+        border-color: #2c5530;
+      }
+
+      .add-to-cart {
+        background-color: #2c5530;
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-weight: bold;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+      }
+
+      .add-to-cart:hover {
+        background-color: #1e3a21;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(44, 85, 48, 0.3);
+      }
+
+      /* FIXED ACCORDION STYLES - This is the main improvement */
+      .accordion {
+        width: 100%;
+        max-width: 1200px;
+        margin: 3rem auto;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .accordion-section {
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      .accordion-section:last-child {
+        border-bottom: none;
+      }
+
+      .accordion-header {
+        padding: 20px 25px;
+        background: #f8f9fa;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #333;
+        transition: all 0.3s ease;
+        position: relative;
+        border: none;
+      }
+
+      .accordion-header:hover {
+        background: #e9ecef;
+        color: #2c5530;
+      }
+
+      .accordion-header.active {
+        background: #2c5530;
+        color: white;
+      }
+
+      /* Add arrow indicator */
+      .accordion-header::after {
+        content: '▼';
+        position: absolute;
+        right: 25px;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: transform 0.3s ease;
+        font-size: 0.8rem;
+      }
+
+      .accordion-header.active::after {
+        transform: translateY(-50%) rotate(180deg);
+      }
+
+      /* CRITICAL FIX: Proper content spacing and margins */
+      .accordion-content {
+        display: none;
+        background: #fafafa;
+        animation: slideDown 0.3s ease;
+      }
+
+      .accordion-content.show {
+        display: block;
+      }
+
+      /* This inner wrapper provides the essential margins and padding */
+      .accordion-content-wrapper {
+        padding: 25px 30px;
+        margin: 15px 20px;
+        background: white;
+        border-radius: 8px;
+        border-left: 4px solid #2c5530;
+        line-height: 1.8;
+      }
+
+      .accordion-content p {
+        margin-bottom: 15px;
+        color: #555;
+      }
+
+      .accordion-content h2 {
+        color: #2c5530;
+        margin-bottom: 20px;
+        font-size: 1.4rem;
+      }
+
+      .accordion-content em {
+        color: #666;
+        font-style: italic;
+      }
+
+      .accordion-content br {
+        line-height: 2;
+      }
+
+      /* Enhanced form styling within accordion */
+      .accordion-content form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .accordion-content input,
+      .accordion-content select,
+      .accordion-content textarea {
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+      }
+
+      .accordion-content input:focus,
+      .accordion-content select:focus,
+      .accordion-content textarea:focus {
+        outline: none;
+        border-color: #2c5530;
+      }
+
+      .accordion-content textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+
+      .accordion-content button[type="submit"] {
+        background-color: #2c5530;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .accordion-content button[type="submit"]:hover {
+        background-color: #1e3a21;
+      }
+
+      /* Reviews styling */
+      #reviewsContainer {
+        margin-top: 25px;
+      }
+
+      .review {
+        background: #f8f9fa;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border-left: 3px solid #2c5530;
+      }
+
+      .review strong {
+        color: #2c5530;
+      }
+
+      .stars {
+        color: #ffc107;
+        font-size: 1.2rem;
+        margin-left: 10px;
+      }
+
+      /* Slide down animation for accordion */
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          max-height: 0;
+        }
+        to {
+          opacity: 1;
+          max-height: 500px;
+        }
+      }
+
+      /* Footer Styles */
+      .site-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+        background-color: #222;
+        color: #fff;
+        flex-wrap: wrap;
+        margin-top: auto;
+      }
+
+      .site-footer a {
+        color: #1abc9c;
+        text-decoration: none;
+      }
+
+      .site-footer a:hover {
+        text-decoration: underline;
+      }
+
+      .footer-left,
+      .footer-right {
+        flex: 1 1 300px;
+      }
+
+      .footer-right p {
+        margin: 5px 0;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+          flex-direction: column;
+        }
+
+        .thumbnail-images {
+          justify-content: center;
+        }
+
+        .thumbnail {
+          width: 60px;
+          height: 60px;
+        }
+
+        .accordion-content-wrapper {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        .accordion-header {
+          padding: 15px 20px;
+          font-size: 1rem;
+        }
+      }
+    </style>
   </head>
 
   <body>
     <!-- Nav -->
     <nav class="navbar">
       <div class="nav-container">
-        <a href="/" class="logo-link"
-          ><img
-            src="../../assets/logo.png"
-            alt="The Friendly Snail Logo"
-            class="logo"
-        /></a>
+        <a href="/" class="logo-link">
+          <img src="../../assets/logo.png" alt="The Friendly Snail Logo" class="logo" />
+        </a>
         <ul class="nav-links">
           <li><a href="/about/">About</a></li>
           <li><a href="/contact/">Contact</a></li>
@@ -40,22 +464,23 @@
           src="/assets/snailburger1.jpg"
           alt="Main Product Image"
           class="main-image"
+          onclick="nextImage()"
         />
         <div class="thumbnail-images">
           <img
             src="/assets/snailburger1.jpg"
-            class="thumbnail"
-            onclick="changeImage(this)"
+            class="thumbnail active"
+            onclick="changeImage(this, 0)"
           />
           <img
             src="/assets/snailburger2.jpg"
             class="thumbnail"
-            onclick="changeImage(this)"
+            onclick="changeImage(this, 1)"
           />
           <img
             src="/assets/snailburger3.jpg"
             class="thumbnail"
-            onclick="changeImage(this)"
+            onclick="changeImage(this, 2)"
           />
         </div>
       </div>
@@ -79,78 +504,75 @@
       </div>
     </div>
 
-    <!-- Accordion -->
+    <!-- Enhanced Accordion with proper margins -->
     <div class="accordion">
       <div class="accordion-section">
         <div class="accordion-header" onclick="toggleAccordion(this)">Description</div>
         <div class="accordion-content">
-         Made from a nutritious blend of cucumber, broccoli, spinach, and carrot, our Snail Burgers are the perfect plant-based snack for your aquatic snails. Gently bound and shaped into easy-to-eat patties, they provide essential nutrients and enrichment while keeping your tank clean and happy.<br><br>
-
-        ✅ 100% vegetarian<br>
-        ✅ Snail-safe & aquarium-friendly<br>
-        ✅ No added preservatives<br><br>
-
-        Let your snails snack slow and healthy — they’ll love you for it!
+          <div class="accordion-content-wrapper">
+            <p>Made from a nutritious blend of cucumber, broccoli, spinach, and carrot, our Snail Burgers are the perfect plant-based snack for your aquatic snails. Gently bound and shaped into easy-to-eat patties, they provide essential nutrients and enrichment while keeping your tank clean and happy.</p>
+            
+            <p>✅ 100% vegetarian<br>
+            ✅ Snail-safe & aquarium-friendly<br>
+            ✅ No added preservatives</p>
+            
+            <p>Let your snails snack slow and healthy — they'll love you for it!</p>
+          </div>
         </div>
       </div>
 
       <div class="accordion-section">
         <div class="accordion-header" onclick="toggleAccordion(this)">Ingredients</div>
         <div class="accordion-content">
-          <em>Ingredients are listed in order of proportions</em><br><br>
-
-Broccoli<br>
-
-Cucumber<br>
-
-Spinach<br>
-
-Carrot<br>
-
-Calcium Carbonate<br>
-
-Limnospira
+          <div class="accordion-content-wrapper">
+            <p><em>Ingredients are listed in order of proportions</em></p>
+            
+            <p>Broccoli<br>
+            Cucumber<br>
+            Spinach<br>
+            Carrot<br>
+            Calcium Carbonate<br>
+            Limnospira</p>
+          </div>
         </div>
       </div>
 
       <div class="accordion-section">
         <div class="accordion-header" onclick="toggleAccordion(this)">Directions for Use</div>
         <div class="accordion-content">
-      Get a small, shallow container and fill it with some water from the aquarium<br>
-
-Gently push on the plastic of the blister pack to push the snail burger out<br>
-
-Put the snail burger in the shallow container and let sit for 5-10 minutes to allow for full thawing<br>
-
-Once the burger is fully thawed, spear it on a weighted skewer or another utensil<br>
-
-Gently place it in the tank and pour the water in with it<br>
-
-Let your snails enjoy their brand new snack!<br><br>
-
-One Snail Burger should last 2 average-sized mystery snails at least 2 days
+          <div class="accordion-content-wrapper">
+            <p>Get a small, shallow container and fill it with some water from the aquarium</p>
+            <p>Gently push on the plastic of the blister pack to push the snail burger out</p>
+            <p>Put the snail burger in the shallow container and let sit for 5-10 minutes to allow for full thawing</p>
+            <p>Once the burger is fully thawed, spear it on a weighted skewer or another utensil</p>
+            <p>Gently place it in the tank and pour the water in with it</p>
+            <p>Let your snails enjoy their brand new snack!</p>
+            <p><strong>Note:</strong> One Snail Burger should last 2 average-sized mystery snails at least 2 days</p>
+          </div>
         </div>
       </div>
 
       <div class="accordion-section">
         <div class="accordion-header" onclick="toggleAccordion(this)">Storage Instructions</div>
         <div class="accordion-content">
-      Store in a cool, dry place.<br>
-Freeze after opening for maximum freshness.<br>
-Use within 6 months of opening.<br>
+          <div class="accordion-content-wrapper">
+            <p>Store in a cool, dry place.<br>
+            Freeze after opening for maximum freshness.<br>
+            Use within 6 months of opening.</p>
+          </div>
         </div>
       </div>
+
       <div class="accordion-section">
-         <div class="accordion-header" onclick="toggleAccordion(this)">
-           Reviews
-        </div>
+        <div class="accordion-header" onclick="toggleAccordion(this)">Reviews</div>
         <div class="accordion-content">
-           <h2>Leave a Review</h2>
-             <form id="review-form">
-               <label for="name">Name:</label>
+          <div class="accordion-content-wrapper">
+            <h2>Leave a Review</h2>
+            <form id="review-form">
+              <label for="name">Name:</label>
               <input id="name" required />
 
-               <label for="rating">Rating:</label>
+              <label for="rating">Rating:</label>
               <select id="rating" required>
                 <option value="5">★★★★★</option>
                 <option value="4">★★★★☆</option>
@@ -180,79 +602,144 @@ Use within 6 months of opening.<br>
       <div class="footer-right">
         <p>
           Email:
-          <a href="mailto:business.gabelawrence@gmail.com"
-            >business.gabelawrence@gmail.com</a
-          >
+          <a href="mailto:business.gabelawrence@gmail.com">business.gabelawrence@gmail.com</a>
         </p>
         <p>Phone: <a href="tel:+61493474198">0493 474 198</a></p>
       </div>
     </footer>
 
-    <!-- JS Scripts -->
+    <!-- Enhanced JavaScript -->
     <script>
-      function changeImage(img) {
+      // Enhanced image navigation system
+      let currentImageIndex = 0;
+      const imageUrls = [
+        '/assets/snailburger1.jpg',
+        '/assets/snailburger2.jpg',
+        '/assets/snailburger3.jpg'
+      ];
+
+      // Enhanced changeImage function with visual feedback
+      function changeImage(img, index) {
+        // Update main image
         document.getElementById("mainImage").src = img.src;
+        
+        // Update thumbnail active states
+        document.querySelectorAll('.thumbnail').forEach(thumb => {
+          thumb.classList.remove('active');
+        });
+        img.classList.add('active');
+        
+        // Update current index
+        currentImageIndex = index;
       }
 
+      // New function: clicking main image advances to next
+      function nextImage() {
+        currentImageIndex = (currentImageIndex + 1) % imageUrls.length;
+        const nextImg = document.querySelectorAll('.thumbnail')[currentImageIndex];
+        changeImage(nextImg, currentImageIndex);
+      }
+
+      // Enhanced accordion functionality with smooth animations
+      function toggleAccordion(header) {
+        const section = header.parentElement;
+        const content = header.nextElementSibling;
+        const isCurrentlyOpen = section.classList.contains("open");
+        
+        // Close all other sections first
+        document.querySelectorAll('.accordion-section').forEach(sec => {
+          sec.classList.remove("open");
+          sec.querySelector('.accordion-header').classList.remove('active');
+          sec.querySelector('.accordion-content').classList.remove('show');
+        });
+        
+        // If this section wasn't open, open it
+        if (!isCurrentlyOpen) {
+          section.classList.add("open");
+          header.classList.add('active');
+          content.classList.add('show');
+        }
+      }
+
+      // Keyboard navigation for images
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+          currentImageIndex = currentImageIndex > 0 ? currentImageIndex - 1 : imageUrls.length - 1;
+          const prevImg = document.querySelectorAll('.thumbnail')[currentImageIndex];
+          changeImage(prevImg, currentImageIndex);
+        } else if (e.key === 'ArrowRight') {
+          nextImage();
+        }
+      });
+
+      // Price update function
       function updatePrice() {
         const select = document.getElementById("size-snail-burger");
         const price = parseFloat(select.value);
-        document.getElementById("price").innerText = $${price.toFixed(2)};
+        document.getElementById("price").innerText = `$${price.toFixed(2)}`;
       }
 
-  function addToCart(id, nameBase, basePrice) {
-    const sizeSelect = document.getElementById("size-snail-burger");
-    const size = sizeSelect.options[sizeSelect.selectedIndex].text;
-    const adjustedPrice = parseFloat(sizeSelect.value);
-    let size = 'Default';
-    let adjustedPrice = basePrice;
+      // Enhanced addToCart function
+      function addToCart(id, nameBase, basePrice) {
+        const sizeSelect = document.getElementById("size-snail-burger");
+        const quantityInput = document.getElementById("quantity");
+        const size = sizeSelect.options[sizeSelect.selectedIndex].text;
+        const adjustedPrice = parseFloat(sizeSelect.value);
+        const quantity = parseInt(quantityInput.value) || 1;
 
-    if (sizeSelect && sizeSelect.selectedOptions.length > 0) {
-      size = sizeSelect.value;
-      adjustedPrice = parseFloat(sizeSelect.selectedOptions[0].dataset.price || basePrice);
-    }
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existingItem = cart.find(item => item.id === id && item.size === size);
+        if (existingItem) {
+          existingItem.quantity += quantity;
+        } else {
+          cart.push({
+            id,
+            name: `${nameBase} (${size})`,
+            baseName: nameBase,
+            size,
+            price: adjustedPrice,
+            quantity: quantity
+          });
+        }
 
-    const existingItem = cart.find(item => item.id === id && item.size === size);
-    if (existingItem) {
-      existingItem.quantity += 1;
-    } else {
-      cart.push({
-        id,
-        name: `${nameBase} (${size})`,
-        baseName: nameBase,
-        size,
-        price: adjustedPrice,
-        quantity: 1
-      });
-    }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartBadge();
+        
+        // Visual feedback for successful add
+        const button = document.querySelector('.add-to-cart');
+        const originalText = button.textContent;
+        button.textContent = 'Added!';
+        button.style.backgroundColor = '#28a745';
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.style.backgroundColor = '#2c5530';
+        }, 1500);
+      }
 
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartBadge();
-  }
+      function updateCartBadge() {
+        const badge = document.getElementById("cart-count-badge");
+        if (!badge) return;
 
-  function updateCartBadge() {
-    const badge = document.getElementById("cart-count-badge");
-    if (!badge) return;
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+        if (itemCount > 0) {
+          badge.textContent = itemCount;
+          badge.style.display = "inline-block";
+        } else {
+          badge.style.display = "none";
+        }
+      }
 
-    if (itemCount > 0) {
-      badge.textContent = itemCount;
-      badge.style.display = "inline-block";
-    } else {
-      badge.style.display = "none";
-    }
-  }
-
+      // Firebase and review functionality
       document.addEventListener("DOMContentLoaded", function () {
+        updateCartBadge(); // Update cart badge on page load
+        
         const firebaseConfig = {
           apiKey: "AIzaSyDsisw2KzJEozNdAIpLgdx5XULB7C-hZZs",
           authDomain: "the-friendly-snail.firebaseapp.com",
-          databaseURL:
-            "https://the-friendly-snail-default-rtdb.asia-southeast1.firebasedatabase.app",
+          databaseURL: "https://the-friendly-snail-default-rtdb.asia-southeast1.firebasedatabase.app",
           projectId: "the-friendly-snail",
           storageBucket: "the-friendly-snail.appspot.com",
           messagingSenderId: "948271049573",
@@ -286,7 +773,7 @@ Use within 6 months of opening.<br>
               timestamp: new Date().toISOString(),
             };
 
-            db.ref(reviews/${productId})
+            db.ref(`reviews/${productId}`)
               .push(newReview)
               .then(() => {
                 alert("Review submitted!");
@@ -298,7 +785,7 @@ Use within 6 months of opening.<br>
               });
           });
 
-          db.ref(reviews/${productId}).on("value", (snapshot) => {
+          db.ref(`reviews/${productId}`).on("value", (snapshot) => {
             const data = snapshot.val();
             reviewsContainer.innerHTML = "";
             if (!data) {
@@ -312,25 +799,16 @@ Use within 6 months of opening.<br>
             reviews.forEach((review) => {
               const div = document.createElement("div");
               div.className = "review";
-              const stars =
-                "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
-              div.innerHTML = 
+              const stars = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
+              div.innerHTML = `
                 <div><strong>${review.name}</strong> <span class="stars">${stars}</span></div>
                 <div>${review.text}</div>
-              ;
+              `;
               reviewsContainer.appendChild(div);
             });
           });
         }
       });
     </script>
-    <script>
-    function toggleAccordion(header) {
-      console.log("Toggling accordion");
-      const section = header.parentElement;
-      section.classList.toggle("open");
-    }
-    </script>
-
   </body>
 </html>
