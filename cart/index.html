@@ -188,13 +188,14 @@
 
     .cart-item {
       border-bottom: 1px solid #f0f0f0;
-      padding: 25px 0;
+      padding: 25px 30px;
       display: grid;
-      grid-template-columns: 1fr auto 1fr auto;
+      grid-template-columns: 2fr 1fr 1fr 100px;
       align-items: center;
-      gap: 30px;
+      gap: 40px;
       transition: all 0.3s ease;
       animation: fadeInUp 0.6s ease both;
+      margin: 0 -30px;
     }
 
     .cart-item:last-child {
@@ -203,8 +204,7 @@
 
     .cart-item:hover {
       background-color: #f8f9fa;
-      margin: 0 -20px;
-      padding: 25px 20px;
+      padding: 25px 30px;
       border-radius: 10px;
     }
 
@@ -435,6 +435,8 @@
         grid-template-columns: 1fr;
         gap: 15px;
         text-align: center;
+        margin: 0;
+        padding: 20px 15px;
       }
 
       .item-details {
@@ -606,7 +608,12 @@
 
     // Update quantity
     function updateQuantity(itemId, change) {
-      const itemIndex = cart.findIndex(item => item.id === itemId);
+      // Find the specific item by unique identifier
+      const itemIndex = cart.findIndex(item => {
+        const currentItemId = item.id + (item.variables ? '-' + item.variables : '');
+        return currentItemId === itemId;
+      });
+      
       if (itemIndex !== -1) {
         cart[itemIndex].quantity += change;
         if (cart[itemIndex].quantity <= 0) {
@@ -618,11 +625,20 @@
       }
     }
 
-    // FIXED: Remove item from cart and localStorage
+    /* Remove item from cart and localStorage */
     function removeItem(itemId) {
-      cart = cart.filter(item => item.id !== itemId);
-      saveCartToStorage();
-      loadCart();
+      // Find the specific item by unique identifier
+      const itemIndex = cart.findIndex(item => {
+        // Create unique identifier from id and variables to handle same products with different sizes
+        const currentItemId = item.id + (item.variables ? '-' + item.variables : '');
+        return currentItemId === itemId;
+      });
+      
+      if (itemIndex !== -1) {
+        cart.splice(itemIndex, 1);
+        saveCartToStorage();
+        loadCart();
+      }
     }
 
     // Calculate total
@@ -645,34 +661,40 @@
       cartLayoutEl.style.display = 'block';
 
       cart.forEach((item, index) => {
+        // Create unique identifier for each item including size/variables
+        const uniqueItemId = item.id + (item.variables ? '-' + item.variables : '');
+        
         const cartItemEl = document.createElement('div');
         cartItemEl.className = 'cart-item';
         cartItemEl.style.animationDelay = `${index * 0.1}s`;
+        
+        // Don't show "Default" - only show variables if they exist and aren't "Default"
+        const displayVariables = item.variables && item.variables !== 'Default' ? item.variables : '';
         
         cartItemEl.innerHTML = `
           <div class="item-details">
             <img src="${item.image || '/assets/default.jpg'}" alt="${item.name}" />
             <div class="item-info">
               <h3>${item.name}</h3>
-              <p>${item.variables || 'Default'}</p>
+              ${displayVariables ? `<p>${displayVariables}</p>` : ''}
             </div>
           </div>
           <div class="item-price">
-            $${(item.price * item.quantity).toFixed(2)}
+            ${(item.price * item.quantity).toFixed(2)}
           </div>
           <div class="quantity-section">
             <span class="quantity-label">Quantity</span>
             <div class="quantity-controls">
-              <button class="quantity-btn" onclick="updateQuantity('${item.id}', -1)" ${item.quantity <= 1 ? 'disabled' : ''}>
+              <button class="quantity-btn" onclick="updateQuantity('${uniqueItemId}', -1)" ${item.quantity <= 1 ? 'disabled' : ''}>
                 <i class="fas fa-minus"></i>
               </button>
               <span class="quantity-display">${item.quantity}</span>
-              <button class="quantity-btn" onclick="updateQuantity('${item.id}', 1)">
+              <button class="quantity-btn" onclick="updateQuantity('${uniqueItemId}', 1)">
                 <i class="fas fa-plus"></i>
               </button>
             </div>
           </div>
-          <button class="delete-btn" onclick="removeItem('${item.id}')">
+          <button class="delete-btn" onclick="removeItem('${uniqueItemId}')">
             <i class="fas fa-trash"></i>
           </button>
         `;
