@@ -610,7 +610,8 @@
     function updateQuantity(itemId, change) {
       // Find the specific item by unique identifier
       const itemIndex = cart.findIndex(item => {
-        const currentItemId = item.id + (item.variables ? '-' + item.variables : '');
+        const itemSize = item.variables || item.size;
+        const currentItemId = item.id + (itemSize ? '-' + itemSize : '');
         return currentItemId === itemId;
       });
       
@@ -629,8 +630,9 @@
     function removeItem(itemId) {
       // Find the specific item by unique identifier
       const itemIndex = cart.findIndex(item => {
-        // Create unique identifier from id and variables to handle same products with different sizes
-        const currentItemId = item.id + (item.variables ? '-' + item.variables : '');
+        // Create unique identifier from id and variables/size to handle same products with different sizes
+        const itemSize = item.variables || item.size;
+        const currentItemId = item.id + (itemSize ? '-' + itemSize : '');
         return currentItemId === itemId;
       });
       
@@ -662,7 +664,8 @@
 
       cart.forEach((item, index) => {
         // Create unique identifier for each item including size/variables
-        const uniqueItemId = item.id + (item.variables ? '-' + item.variables : '');
+        const itemSize = item.variables || item.size;
+        const uniqueItemId = item.id + (itemSize ? '-' + itemSize : '');
         
         const cartItemEl = document.createElement('div');
         cartItemEl.className = 'cart-item';
