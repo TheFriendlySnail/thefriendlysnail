@@ -668,15 +668,24 @@
         cartItemEl.className = 'cart-item';
         cartItemEl.style.animationDelay = `${index * 0.1}s`;
         
-        // Don't show "Default" - only show variables if they exist and aren't "Default"
-        const displayVariables = item.variables && item.variables !== 'Default' ? item.variables : '';
+        // Don't show "Small" or "Default" - only show variables if they exist and aren't base sizes
+        const displayVariables = (item.variables && item.variables !== 'Default' && item.variables !== 'Small') ? ` (${item.variables})` : '';
+        
+        // Set correct image path based on product ID
+        let imagePath = '/assets/default.jpg';
+        if (item.id === 'snail-burger') {
+          imagePath = '/assets/snail-burger.jpg';
+        } else if (item.id === 'weighted-skewer') {
+          imagePath = '/assets/weighted-skewer.jpg';
+        } else if (item.id === 'spinach-wraps') {
+          imagePath = '/assets/spinach.jpg';
+        }
         
         cartItemEl.innerHTML = `
           <div class="item-details">
-            <img src="${item.image || '/assets/default.jpg'}" alt="${item.name}" />
+            <img src="${imagePath}" alt="${item.name}" />
             <div class="item-info">
-              <h3>${item.name}</h3>
-              ${displayVariables ? `<p>${displayVariables}</p>` : ''}
+              <h3>${item.name}${displayVariables}</h3>
             </div>
           </div>
           <div class="item-price">
