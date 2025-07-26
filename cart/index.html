@@ -579,6 +579,7 @@
         const storedCart = localStorage.getItem('cart');
         if (storedCart) {
           cart = JSON.parse(storedCart);
+          console.log('Loaded cart from storage:', cart); // Debug log
         }
       } catch (error) {
         console.error('Error loading cart:', error);
@@ -650,15 +651,18 @@
 
     // Load and display cart
     function loadCart() {
+      console.log('Loading cart, items count:', cart.length); // Debug log
       cartItemsContainer.innerHTML = '';
       
       if (cart.length === 0) {
+        console.log('Cart is empty, showing empty state'); // Debug log
         emptyCartEl.style.display = 'block';
         cartLayoutEl.style.display = 'none';
         updateCartBadge();
         return;
       }
 
+      console.log('Cart has items, showing cart layout'); // Debug log
       emptyCartEl.style.display = 'none';
       cartLayoutEl.style.display = 'block';
 
@@ -671,8 +675,9 @@
         cartItemEl.className = 'cart-item';
         cartItemEl.style.animationDelay = `${index * 0.1}s`;
         
-        // Don't show "Small" or "Default" - only show variables if they exist and aren't base sizes
+        // Create the size/variables text - FIXED: Define sizeText properly
         const displayVariables = (item.variables && item.variables !== 'Default' && item.variables !== 'Small') ? ` (${item.variables})` : '';
+        const sizeText = displayVariables ? `<p>Size: ${item.variables}</p>` : '';
         
         // Set correct image path based on product ID
         let imagePath = '/assets/default.jpg';
@@ -688,12 +693,12 @@
           <div class="item-details">
             <img src="${imagePath}" alt="${item.name}" />
             <div class="item-info">
-              <h3>${item.name}</h3>
+              <h3>${item.name}${displayVariables}</h3>
               ${sizeText}
             </div>
           </div>
           <div class="item-price">
-            ${(item.price * item.quantity).toFixed(2)}
+            $${(item.price * item.quantity).toFixed(2)}
           </div>
           <div class="quantity-section">
             <span class="quantity-label">Quantity</span>
@@ -764,6 +769,7 @@
 
     // Initialize the page
     document.addEventListener("DOMContentLoaded", function() {
+      console.log('DOM loaded, initializing cart page'); // Debug log
       loadCartFromStorage(); // Load actual cart data from localStorage
       loadCart();
     });
